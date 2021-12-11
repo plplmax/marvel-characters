@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MRV</string>
+    <string name="default_description_character_image">The hero of Marvel</string>
 </resources>
