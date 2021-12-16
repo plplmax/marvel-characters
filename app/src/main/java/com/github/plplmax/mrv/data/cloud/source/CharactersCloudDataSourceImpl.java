@@ -1,7 +1,7 @@
-package com.github.plplmax.mrv.data.cloud;
+package com.github.plplmax.mrv.data.cloud.source;
 
+import com.github.plplmax.mrv.data.cloud.CharactersService;
 import com.github.plplmax.mrv.data.models.network.CharacterDataWrapperResponse;
-import com.github.plplmax.mrv.domain.datasource.CharactersCloudDataSource;
 
 import retrofit2.Response;
 

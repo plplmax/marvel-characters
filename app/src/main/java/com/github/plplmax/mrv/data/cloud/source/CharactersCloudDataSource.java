@@ -1,4 +1,4 @@
-package com.github.plplmax.mrv.domain.datasource;
+package com.github.plplmax.mrv.data.cloud.source;
 
 import com.github.plplmax.mrv.data.models.network.CharacterDataWrapperResponse;
 
