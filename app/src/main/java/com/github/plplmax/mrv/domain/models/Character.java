@@ -6,6 +6,13 @@ public class Character {
     private String description;
     private Image thumbnail;
 
+    public Character(int id, String name, String description, Image thumbnail) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.thumbnail = thumbnail;
+    }
+
     public int getId() {
         return id;
     }
