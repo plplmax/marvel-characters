@@ -1,26 +1,27 @@
 package com.github.plplmax.mrv.domain.core;
 
-public interface Result {
-    class Success<R> implements Result {
-        private final R data;
+public interface Result<R> {
 
-        public Success(R data) {
+    class Success<S> implements Result<S> {
+        private final S data;
+
+        public Success(S data) {
             this.data = data;
         }
 
-        public R getData() {
+        public S getData() {
             return data;
         }
     }
 
-    class Fail implements Result {
-        private final Exception exception;
+    class Fail<F> implements Result<F> {
+        private final F exception;
 
-        public Fail(Exception exception) {
+        public Fail(F exception) {
             this.exception = exception;
         }
 
-        public Exception getException() {
+        public F getException() {
             return exception;
         }
     }
