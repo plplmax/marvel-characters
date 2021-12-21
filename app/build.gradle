@@ -2,6 +2,9 @@ plugins {
     id 'com.android.application'
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 android {
     compileSdk 30
 
@@ -16,6 +19,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            resValue("string", "public_marvel_api_key", localProperties['publicApiKey'])
+            resValue("string", "private_marvel_api_key", localProperties['privateApiKey'])
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
