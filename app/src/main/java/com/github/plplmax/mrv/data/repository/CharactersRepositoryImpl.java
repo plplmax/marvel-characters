@@ -35,7 +35,8 @@ public class CharactersRepositoryImpl implements CharactersRepository {
                 return new FetchCharactersResult.Success(new ArrayList<>());
             }
 
-            return new FetchCharactersResult.Fail(new Exception());
+            String errorMessage = response.errorBody() != null ? response.errorBody().string() : "";
+            return new FetchCharactersResult.Fail(new Exception(errorMessage));
         } catch (Exception e) {
             return new FetchCharactersResult.Fail(e);
         }
