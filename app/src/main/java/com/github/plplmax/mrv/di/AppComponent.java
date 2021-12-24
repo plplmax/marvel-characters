@@ -1,5 +1,6 @@
 package com.github.plplmax.mrv.di;
 
+import com.github.plplmax.mrv.ui.CharactersFragment;
 import com.github.plplmax.mrv.ui.MainActivity;
 
 import javax.inject.Singleton;
@@ -10,4 +11,6 @@ import dagger.Component;
 @Component(modules = {AppModule.class, DomainModule.class, DataModule.class})
 public interface AppComponent {
     void inject(MainActivity mainActivity);
+
+    void inject(CharactersFragment charactersFragment);
 }
