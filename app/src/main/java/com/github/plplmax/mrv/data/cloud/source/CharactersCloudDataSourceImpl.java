@@ -3,6 +3,8 @@ package com.github.plplmax.mrv.data.cloud.source;
 import com.github.plplmax.mrv.data.cloud.CharactersService;
 import com.github.plplmax.mrv.data.models.network.CharacterDataWrapperResponse;
 
+import java.io.IOException;
+
 import retrofit2.Response;
 
 public class CharactersCloudDataSourceImpl implements CharactersCloudDataSource {
@@ -13,7 +15,7 @@ public class CharactersCloudDataSourceImpl implements CharactersCloudDataSource 
     }
 
     @Override
-    public Response<CharacterDataWrapperResponse> fetchCharacters() {
-        return service.fetchCharacters();
+    public Response<CharacterDataWrapperResponse> fetchCharacters() throws IOException {
+        return service.fetchCharacters().execute();
     }
 }
