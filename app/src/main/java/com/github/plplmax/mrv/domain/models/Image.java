@@ -29,4 +29,10 @@ public class Image {
     public boolean isAvailable() {
         return !path.contains(IMAGE_UNAVAILABLE_NAME);
     }
+
+    @SuppressWarnings("NullableProblems")
+    @Override
+    public String toString() {
+        return path + "." + extension;
+    }
 }
