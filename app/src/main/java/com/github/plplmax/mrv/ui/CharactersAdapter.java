@@ -49,12 +49,12 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.Vi
     public void onBindViewHolder(@NonNull CharactersAdapter.ViewHolder holder, int position) {
         Character character = characters.get(position);
         Image image = character.getThumbnail();
-        String url = image.getPath() + "." + image.getExtension();
+        String url = image.toString();
 
         RequestBuilder<Drawable> requestBuilder = Glide.with(holder.characterView.getContext())
                 .load(url);
 
-        if (!url.contains("image_not_available")) requestBuilder.centerCrop();
+        if (image.isAvailable()) requestBuilder.centerCrop();
 
         requestBuilder.placeholder(R.mipmap.ic_launcher)
                 .transition(DrawableTransitionOptions.withCrossFade())
