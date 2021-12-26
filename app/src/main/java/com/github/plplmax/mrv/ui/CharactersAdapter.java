@@ -50,7 +50,6 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.Vi
                 .load(url)
                 .placeholder(R.mipmap.ic_launcher)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .onlyRetrieveFromCache(true)
                 .into(holder.characterView);
         holder.characterView.setOnClickListener(v -> {
             onClickListener.onCharacterClick(character, position);
