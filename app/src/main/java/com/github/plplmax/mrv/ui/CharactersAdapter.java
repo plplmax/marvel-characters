@@ -1,6 +1,8 @@
 package com.github.plplmax.mrv.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.github.plplmax.mrv.R;
 import com.github.plplmax.mrv.domain.models.Character;
@@ -41,14 +44,19 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.Vi
         return new ViewHolder(view);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(@NonNull CharactersAdapter.ViewHolder holder, int position) {
         Character character = characters.get(position);
         Image image = character.getThumbnail();
         String url = image.getPath() + "." + image.getExtension();
-        Glide.with(holder.characterView.getContext())
-                .load(url)
-                .placeholder(R.mipmap.ic_launcher)
+
+        RequestBuilder<Drawable> requestBuilder = Glide.with(holder.characterView.getContext())
+                .load(url);
+
+        if (!url.contains("image_not_available")) requestBuilder.centerCrop();
+
+        requestBuilder.placeholder(R.mipmap.ic_launcher)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.characterView);
         holder.characterView.setOnClickListener(v -> {
