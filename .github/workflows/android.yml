@@ -20,6 +20,13 @@ jobs:
 
       - name: Test
         run: ./gradlew build
+        
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./app/build/test-results/
+          fail_ci_if_error: true
+          verbose: true
 
   android:
     runs-on: macos-latest
@@ -53,20 +60,10 @@ jobs:
           script: ./gradlew connectedCheck
         env:
           API_LEVEL: ${{ matrix.api-level }}
-
-  codecov:
-    runs-on: ubuntu-latest
-    
-    needs:
-      - jvm
-      - android
-    
-    steps:
-      - uses: actions/checkout@v2
-
+          
       - uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./app/build/test-results/testDebugUnitTest/**, ./app/build/outputs/androidTest-results/**
+          directory: .app/build/outputs/androidTest-results/
           fail_ci_if_error: true
           verbose: true
