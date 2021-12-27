@@ -24,7 +24,6 @@ jobs:
       - uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: ./app/build/test-results/
           fail_ci_if_error: true
           verbose: true
 
@@ -64,6 +63,5 @@ jobs:
       - uses: codecov/codecov-action@v2
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: .app/build/outputs/androidTest-results/
           fail_ci_if_error: true
           verbose: true
