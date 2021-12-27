@@ -29,6 +29,8 @@ jobs:
       matrix:
         include:
           - api-level: 21
+            target: default
+            arch: x86
           - api-level: 31
             target: google_apis
             arch: x86_64
@@ -54,6 +56,10 @@ jobs:
 
   codecov:
     runs-on: ubuntu-latest
+    
+    needs:
+      - jvm
+      - android
     
     steps:
       - uses: actions/checkout@v2
