@@ -46,16 +46,15 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
+          target: ${{ matrix.target }}
+          arch: ${{ matrix.arch }}
           script: ./gradlew connectedCheck
         env:
           API_LEVEL: ${{ matrix.api-level }}
 
   codecov:
     runs-on: ubuntu-latest
-    needs:
-      - jvm
-      - android
-
+    
     steps:
       - uses: actions/checkout@v2
 
