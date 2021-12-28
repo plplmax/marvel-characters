@@ -20,7 +20,8 @@ jobs:
         run: pwd
       - name: Build debug
         run: |
-          bash echo -e "publicApiKey=plug\nprivateApiKey=plug" >> local.properties
+          touch local.properties
+          printf "publicApiKey=plug\nprivateApiKey=plug" >> local.properties
           bash ./gradlew build jacocoTestReport assembleAndroidTest
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
