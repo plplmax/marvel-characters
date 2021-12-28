@@ -16,10 +16,14 @@ jobs:
         with:
           distribution: 'zulu' # See 'Supported distributions' for available options
           java-version: '11'
+      - name: Print work directory
+        run: pwd
       - name: Build debug
         run: |
-          touch local.properties
-          echo "publicApiKey=plug\nprivateApiKey=plug" >> local.properties
+          bash cat > "./local.properties" <<- FILE_CONTENT
+          publicApiKey=plug
+          privateApiKey=plug
+          
           bash ./gradlew build jacocoTestReport assembleAndroidTest
       - name: run tests
         uses: reactivecircus/android-emulator-runner@v2
