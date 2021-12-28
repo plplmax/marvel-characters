@@ -1,67 +1,44 @@
 name: android
 
-on: [push, pull_request]
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
 
-env:
-  GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false"
-
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  jvm:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v2
-      - uses: gradle/wrapper-validation-action@v1
-
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'zulu'
-          java-version: 11
-
-      - name: Test
-        run: ./gradlew build
-        
-      - uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
-          verbose: true
-
-  android:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
     runs-on: macos-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - api-level: 21
-            target: default
-            arch: x86
-          - api-level: 31
-            target: google_apis
-            arch: x86_64
-
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - uses: gradle/wrapper-validation-action@v1
 
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'zulu'
-          java-version: 11
+       # Execute unit tests
+      - name: Unit Test with Android Emulator Runner
+        uses: ReactiveCircus/android-emulator-runner@v2.14.3
+        with: 
+            api-level: 29
+            script: ./gradlew connectedCheck 
 
-      - name: Run Tests
-        uses: reactivecircus/android-emulator-runner@v2
+       # run: ./gradlew testDebugUnitTest
+
+      - name: generate report
+        uses: actions/upload-artifact@v2
         with:
-          api-level: ${{ matrix.api-level }}
-          target: ${{ matrix.target }}
-          arch: ${{ matrix.arch }}
-          script: ./gradlew connectedCheck
-        env:
-          API_LEVEL: ${{ matrix.api-level }}
-          
-      - uses: codecov/codecov-action@v2
+          name: report 
+          path: app/build/reports/coverage/debug
+
+
+      - name: Download Test Reports Folder
+        uses: actions/download-artifact@v2
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          fail_ci_if_error: true
-          verbose: true
+          name: report
+          path: app/build/reports/coverage/debug
+
+      - name: Upload Test Report
+        run:  bash <(curl -s https://codecov.io/bash) -f "app/build/reports/coverage/debug/report.xml" -t ${{ secrets.CODECOV_TOKEN }}
