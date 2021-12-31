@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="14dp"
+    tools:context=".ui.detailscreen.CharacterDetailFragment">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+            <ImageView
+                android:id="@+id/character_image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/character_image_height"
+                android:contentDescription="@string/default_description_character_image"
+                tools:src="@drawable/hero" />
+
+            <TextView
+                android:id="@+id/character_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="14dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                tools:text="Testing" />
+
+            <TextView
+                android:id="@+id/character_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingHorizontal="14dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                tools:text="Decsription of characterDecsription of characterDecsription of
+                characterDecsription of characterDecsription of characterDecsription of
+                characterDecsription of characterDecsription of character" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</LinearLayout>
