@@ -5,6 +5,9 @@ on:
     branches: [master, develop]
   pull_request:
     branches: [master, develop]
+    
+env:
+  GRADLE_OPTS: "-Dorg.gradle.jvmargs=-Xmx4g -Dorg.gradle.daemon=false"
 
 jobs:
   test:
@@ -28,6 +31,15 @@ jobs:
         with:
           api-level: 29
           script: ./gradlew connectedCheck
+      - name: build cache
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
       - name: Upload coverage to Codecov
         run: |
           curl -Os https://uploader.codecov.io/latest/macos/codecov
