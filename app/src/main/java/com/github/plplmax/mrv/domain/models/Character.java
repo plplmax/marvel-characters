@@ -1,6 +1,8 @@
 package com.github.plplmax.mrv.domain.models;
 
-public class Character {
+import java.io.Serializable;
+
+public class Character implements Serializable {
     private int id;
     private String name;
     private String description;

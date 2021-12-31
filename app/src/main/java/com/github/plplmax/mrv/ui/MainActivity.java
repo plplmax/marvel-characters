@@ -7,13 +7,21 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.github.plplmax.mrv.Application;
 import com.github.plplmax.mrv.R;
+import com.github.plplmax.mrv.domain.models.Character;
+import com.github.plplmax.mrv.ui.detailscreen.CharacterDetailFragment;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements CharactersFragment.OnCharacterClickListener {
     @Inject
     MainViewModelFactory factory;
     private MainViewModel viewModel;
+
+    @Override
+    public void onCharacterClick(Character character) {
+        openCharacterDetailFragment(character);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +35,14 @@ public class MainActivity extends AppCompatActivity {
     private void openCharactersFragment() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, CharactersFragment.class, null)
+                .commit();
+    }
+
+    private void openCharacterDetailFragment(Character character) {
+        CharacterDetailFragment fragment = CharacterDetailFragment.newInstance(character);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
                 .commit();
     }
 }
