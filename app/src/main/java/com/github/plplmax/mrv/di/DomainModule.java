@@ -1,5 +1,6 @@
 package com.github.plplmax.mrv.di;
 
+import com.github.plplmax.mrv.domain.core.Md5Provider;
 import com.github.plplmax.mrv.domain.interactors.FetchCharactersInteractor;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;
 
@@ -11,5 +12,10 @@ public class DomainModule {
     @Provides
     FetchCharactersInteractor provideFetchCharactersInteractor(CharactersRepository repository) {
         return new FetchCharactersInteractor(repository);
+    }
+
+    @Provides
+    Md5Provider provideMd5Provider() {
+        return new Md5Provider.Base();
     }
 }
