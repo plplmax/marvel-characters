@@ -1,11 +1,19 @@
 package com.github.plplmax.mrv.di;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
+import androidx.room.Room;
 
 import com.github.plplmax.mrv.R;
 import com.github.plplmax.mrv.data.cloud.CharactersService;
 import com.github.plplmax.mrv.data.cloud.source.CharactersCloudDataSource;
 import com.github.plplmax.mrv.data.cloud.source.CharactersCloudDataSourceImpl;
+import com.github.plplmax.mrv.data.local.AppDatabase;
+import com.github.plplmax.mrv.data.local.CharacterDao;
+import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSource;
+import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSourceImpl;
+import com.github.plplmax.mrv.data.mappers.CharacterDataMapper;
 import com.github.plplmax.mrv.data.mappers.CharacterDataWrapperResponseMapper;
 import com.github.plplmax.mrv.data.repository.CharactersRepositoryImpl;
 import com.github.plplmax.mrv.domain.core.Md5Provider;
@@ -29,6 +37,7 @@ public class DataModule {
     private static final String API_KEY = "apikey";
     private static final String TIMESTAMP_KEY = "ts";
     private static final String HASH_KEY = "hash";
+    private static final String DATABASE_NAME = "database";
     private static final byte TIMEOUT_IN_SECONDS = 120;
 
     @Provides
@@ -60,9 +69,30 @@ public class DataModule {
     }
 
     @Provides
+    CharactersLocalDataSource provideLocalDataSource(CharacterDao dao) {
+        return new CharactersLocalDataSourceImpl(dao);
+    }
+
+    @Provides
+    CharacterDao provideCharacterDao(AppDatabase database) {
+        return database.characterDao();
+    }
+
+    @Provides
+    AppDatabase provideRoomDatabase(Context context) {
+        return Room.databaseBuilder(context, AppDatabase.class, DATABASE_NAME)
+                .build();
+    }
+
+    @Provides
     CharactersRepository provideCharactersRepository(CharactersCloudDataSource cloudDataSource,
-                                                     CharacterDataWrapperResponseMapper mapper) {
-        return new CharactersRepositoryImpl(cloudDataSource, mapper);
+                                                     CharactersLocalDataSource localDataSource,
+                                                     CharacterDataWrapperResponseMapper wrapperResponseMapper,
+                                                     CharacterDataMapper characterDataMapper) {
+        return new CharactersRepositoryImpl(cloudDataSource,
+                localDataSource,
+                wrapperResponseMapper,
+                characterDataMapper);
     }
 
     @Provides
@@ -87,5 +117,10 @@ public class DataModule {
     @Provides
     CharacterDataWrapperResponseMapper provideCharacterDataWrapperResponseMapper() {
         return new CharacterDataWrapperResponseMapper();
+    }
+
+    @Provides
+    CharacterDataMapper provideCharacterDataMapper() {
+        return new CharacterDataMapper();
     }
 }
