@@ -96,13 +96,13 @@ public class DataModule {
     }
 
     @Provides
-    Interceptor provideInterceptor(ResourceProvider provider) {
+    Interceptor provideInterceptor(ResourceProvider resourceProvider, Md5Provider md5Provider) {
         return chain -> {
             Request request = chain.request();
             long timeStamp = System.currentTimeMillis();
-            String publicKey = provider.getString(R.string.public_marvel_api_key);
-            String privateKey = provider.getString(R.string.private_marvel_api_key);
-            String md5 = Md5Provider.getMd5(timeStamp + privateKey + publicKey);
+            String publicKey = resourceProvider.getString(R.string.public_marvel_api_key);
+            String privateKey = resourceProvider.getString(R.string.private_marvel_api_key);
+            String md5 = md5Provider.getMd5(timeStamp + privateKey + publicKey);
             HttpUrl url = request.url()
                     .newBuilder()
                     .addQueryParameter(API_KEY, publicKey)
