@@ -9,11 +9,13 @@ localProperties.load(new FileInputStream(rootProject.file("local.properties")))
 
 android {
     compileSdk 30
+    compileSdk 31
 
     defaultConfig {
         applicationId "com.github.plplmax.mrv"
         minSdk 21
         targetSdk 30
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
