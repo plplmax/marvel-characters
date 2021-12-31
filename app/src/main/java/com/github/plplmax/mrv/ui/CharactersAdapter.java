@@ -21,16 +21,12 @@ import com.github.plplmax.mrv.domain.models.Image;
 import java.util.List;
 
 public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.ViewHolder> {
-    interface OnCharacterClickListener {
-        void onCharacterClick(Character character, int position);
-    }
-
-    private final OnCharacterClickListener onClickListener;
+    private final CharactersFragment.OnCharacterClickListener onClickListener;
     private final LayoutInflater inflater;
     private final List<Character> characters;
 
     public CharactersAdapter(Context context,
-                             OnCharacterClickListener onClickListener,
+                             CharactersFragment.OnCharacterClickListener onClickListener,
                              List<Character> characters) {
         this.onClickListener = onClickListener;
         this.characters = characters;
@@ -60,7 +56,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<CharactersAdapter.Vi
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.characterView);
         holder.characterView.setOnClickListener(v -> {
-            onClickListener.onCharacterClick(character, position);
+            onClickListener.onCharacterClick(character);
         });
     }
 

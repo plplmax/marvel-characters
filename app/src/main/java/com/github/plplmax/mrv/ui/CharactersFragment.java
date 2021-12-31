@@ -33,10 +33,23 @@ public class CharactersFragment extends Fragment {
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private CharactersAdapter adapter;
+    private OnCharacterClickListener characterClickListener;
     private final List<Character> characters = new ArrayList<>();
+
+    interface OnCharacterClickListener {
+        void onCharacterClick(Character character);
+    }
 
     public CharactersFragment() {
         super(R.layout.fragment_characters);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof OnCharacterClickListener) {
+            characterClickListener = (OnCharacterClickListener) context;
+        } else throw new IllegalArgumentException("OnCharacterClickListener must be implemented");
     }
 
     @Override
@@ -59,10 +72,9 @@ public class CharactersFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         recyclerView = view.findViewById(R.id.recycler_view);
         progressBar = view.findViewById(R.id.progress_bar);
-        CharactersAdapter.OnCharacterClickListener clickListener = (character, position) -> {
-            showMessage("Был выбран " + character.getName());
-        };
-        adapter = new CharactersAdapter(getContext(), clickListener, characters);
+        adapter = new CharactersAdapter(getContext(),
+                character -> characterClickListener.onCharacterClick(character),
+                characters);
         recyclerView.setAdapter(adapter);
 
         viewModel.success.observe(getViewLifecycleOwner(), characters -> {
