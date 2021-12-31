@@ -32,7 +32,7 @@ jobs:
           api-level: 29
           script: ./gradlew connectedCheck
       - name: build cache
-      - uses: actions/cache@v2
+        uses: actions/cache@v2
         with:
           path: |
             ~/.gradle/caches
