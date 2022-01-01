@@ -29,6 +29,6 @@ public class AppModule {
 
     @Provides
     ResourceProvider provideResourceProvider(Context context) {
-        return new ResourceProvider(context);
+        return new ResourceProvider.Base(context);
     }
 }
