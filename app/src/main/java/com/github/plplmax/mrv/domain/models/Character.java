@@ -1,6 +1,7 @@
 package com.github.plplmax.mrv.domain.models;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Character implements Serializable {
     private int id;
@@ -45,5 +46,21 @@ public class Character implements Serializable {
 
     public void setThumbnail(Image thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Character character = (Character) o;
+        return id == character.id &&
+                Objects.equals(name, character.name) &&
+                Objects.equals(description, character.description) &&
+                Objects.equals(thumbnail, character.thumbnail);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
