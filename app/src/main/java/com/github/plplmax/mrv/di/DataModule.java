@@ -13,8 +13,8 @@ import com.github.plplmax.mrv.data.local.AppDatabase;
 import com.github.plplmax.mrv.data.local.CharacterDao;
 import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSource;
 import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSourceImpl;
-import com.github.plplmax.mrv.data.mappers.CharacterDataMapper;
-import com.github.plplmax.mrv.data.mappers.CharacterDataWrapperResponseMapper;
+import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
+import com.github.plplmax.mrv.data.cloud.CharacterResponseMapper;
 import com.github.plplmax.mrv.data.repository.CharactersRepositoryImpl;
 import com.github.plplmax.mrv.domain.core.Md5Provider;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;
@@ -87,12 +87,12 @@ public class DataModule {
     @Provides
     CharactersRepository provideCharactersRepository(CharactersCloudDataSource cloudDataSource,
                                                      CharactersLocalDataSource localDataSource,
-                                                     CharacterDataWrapperResponseMapper wrapperResponseMapper,
-                                                     CharacterDataMapper characterDataMapper) {
+                                                     CharacterResponseMapper wrapperResponseMapper,
+                                                     CharacterEntityMapper characterEntityMapper) {
         return new CharactersRepositoryImpl(cloudDataSource,
                 localDataSource,
                 wrapperResponseMapper,
-                characterDataMapper);
+                characterEntityMapper);
     }
 
     @Provides
@@ -115,12 +115,12 @@ public class DataModule {
     }
 
     @Provides
-    CharacterDataWrapperResponseMapper provideCharacterDataWrapperResponseMapper() {
-        return new CharacterDataWrapperResponseMapper();
+    CharacterResponseMapper provideCharacterDataWrapperResponseMapper() {
+        return new CharacterResponseMapper();
     }
 
     @Provides
-    CharacterDataMapper provideCharacterDataMapper() {
-        return new CharacterDataMapper();
+    CharacterEntityMapper provideCharacterDataMapper() {
+        return new CharacterEntityMapper();
     }
 }

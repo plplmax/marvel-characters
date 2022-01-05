@@ -1,5 +1,7 @@
 package com.github.plplmax.mrv.domain.models;
 
+import java.util.Objects;
+
 public class Image {
     private static final String IMAGE_UNAVAILABLE_NAME = "image_not_available";
     private String path;
@@ -34,5 +36,18 @@ public class Image {
     @Override
     public String toString() {
         return path + "." + extension;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Image image = (Image) o;
+        return Objects.equals(path, image.path) && Objects.equals(extension, image.extension);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(path, extension);
     }
 }

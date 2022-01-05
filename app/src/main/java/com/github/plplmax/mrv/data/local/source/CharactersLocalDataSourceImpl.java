@@ -1,7 +1,7 @@
 package com.github.plplmax.mrv.data.local.source;
 
 import com.github.plplmax.mrv.data.local.CharacterDao;
-import com.github.plplmax.mrv.data.models.local.CharacterData;
+import com.github.plplmax.mrv.data.local.CharacterEntity;
 
 import java.util.List;
 
@@ -13,12 +13,12 @@ public class CharactersLocalDataSourceImpl implements CharactersLocalDataSource 
     }
 
     @Override
-    public List<CharacterData> fetchCharacters() {
+    public List<CharacterEntity> fetchCharacters() {
         return dao.fetchCharacters();
     }
 
     @Override
-    public void saveCharacters(List<CharacterData> characters) {
+    public void saveCharacters(List<CharacterEntity> characters) {
         dao.saveCharacters(characters);
     }
 }

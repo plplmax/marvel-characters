@@ -1,11 +1,11 @@
 package com.github.plplmax.mrv.data.local.source;
 
-import com.github.plplmax.mrv.data.models.local.CharacterData;
+import com.github.plplmax.mrv.data.local.CharacterEntity;
 
 import java.util.List;
 
 public interface CharactersLocalDataSource {
-    List<CharacterData> fetchCharacters();
+    List<CharacterEntity> fetchCharacters();
 
-    void saveCharacters(List<CharacterData> characters);
+    void saveCharacters(List<CharacterEntity> characters);
 }
