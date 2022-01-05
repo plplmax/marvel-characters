@@ -13,15 +13,13 @@ import java.util.stream.Collectors;
 public class CharacterEntityMapper implements EntityMapper<List<CharacterEntity>, List<Character>> {
     @Override
     public List<CharacterEntity> mapToEntity(@NonNull List<Character> characters) {
-        return characters.stream().map(character -> {
-            CharacterEntity characterEntity = new CharacterEntity();
-            characterEntity.id = character.getId();
-            characterEntity.name = character.getName();
-            characterEntity.description = character.getDescription();
-            characterEntity.thumbnail = new Image(character.getThumbnail().getPath(),
-                    character.getThumbnail().getExtension());
-            return characterEntity;
-        }).collect(Collectors.toList());
+        return characters.stream().map(character -> new CharacterEntity(
+                character.getId(),
+                character.getName(),
+                character.getDescription(),
+                new Image(character.getThumbnail().getPath(),
+                        character.getThumbnail().getExtension())
+        )).collect(Collectors.toList());
     }
 
     @Override
