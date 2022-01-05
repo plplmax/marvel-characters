@@ -5,15 +5,13 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.github.plplmax.mrv.data.models.local.CharacterData;
-
 import java.util.List;
 
 @Dao
 public interface CharacterDao {
     @Query("SELECT * FROM characters")
-    List<CharacterData> fetchCharacters();
+    List<CharacterEntity> fetchCharacters();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void saveCharacters(List<CharacterData> characterData);
+    void saveCharacters(List<CharacterEntity> characters);
 }

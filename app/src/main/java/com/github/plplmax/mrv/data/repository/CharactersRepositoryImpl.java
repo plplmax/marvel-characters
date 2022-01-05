@@ -5,6 +5,7 @@ import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSource;
 import com.github.plplmax.mrv.data.mappers.CharacterDataMapper;
 import com.github.plplmax.mrv.data.mappers.CharacterDataWrapperResponseMapper;
 import com.github.plplmax.mrv.data.models.local.CharacterData;
+import com.github.plplmax.mrv.data.local.CharacterEntity;
 import com.github.plplmax.mrv.data.models.network.CharacterDataWrapperResponse;
 import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
@@ -35,6 +36,7 @@ public class CharactersRepositoryImpl implements CharactersRepository {
     public FetchCharactersResult fetchCharacters() {
         try {
             List<CharacterData> localResponse = localDataSource.fetchCharacters();
+            List<CharacterEntity> localResponse = localDataSource.fetchCharacters();
             if (localResponse.isEmpty()) {
                 Response<CharacterDataWrapperResponse> response = cloudDataSource.fetchCharacters();
                 if (response.isSuccessful()) {
@@ -60,7 +62,7 @@ public class CharactersRepositoryImpl implements CharactersRepository {
 
     @Override
     public void saveCharacters(List<Character> characters) {
-        List<CharacterData> charactersData = characterDataMapper.toCharactersDataList(characters);
+        List<CharacterEntity> charactersData = characterEntityMapper.mapToEntity(characters);
         localDataSource.saveCharacters(charactersData);
     }
 }
