@@ -5,6 +5,7 @@ import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSource;
 import com.github.plplmax.mrv.data.mappers.CharacterDataMapper;
 import com.github.plplmax.mrv.data.mappers.CharacterDataWrapperResponseMapper;
 import com.github.plplmax.mrv.data.models.local.CharacterData;
+import com.github.plplmax.mrv.data.cloud.CharacterResponseMapper;
 import com.github.plplmax.mrv.data.local.CharacterEntity;
 import com.github.plplmax.mrv.data.models.network.CharacterDataWrapperResponse;
 import com.github.plplmax.mrv.domain.models.Character;
@@ -21,15 +22,18 @@ public class CharactersRepositoryImpl implements CharactersRepository {
     private final CharactersLocalDataSource localDataSource;
     private final CharacterDataWrapperResponseMapper wrapperResponseMapper;
     private final CharacterDataMapper characterDataMapper;
+    private final CharacterResponseMapper responseMapper;
 
     public CharactersRepositoryImpl(CharactersCloudDataSource cloudDataSource,
                                     CharactersLocalDataSource localDataSource,
                                     CharacterDataWrapperResponseMapper wrapperResponseMapper,
                                     CharacterDataMapper characterDataMapper) {
+                                    CharacterResponseMapper responseMapper,
         this.cloudDataSource = cloudDataSource;
         this.localDataSource = localDataSource;
         this.wrapperResponseMapper = wrapperResponseMapper;
         this.characterDataMapper = characterDataMapper;
+        this.responseMapper = responseMapper;
     }
 
     @Override
@@ -42,6 +46,7 @@ public class CharactersRepositoryImpl implements CharactersRepository {
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         List<Character> characters = wrapperResponseMapper.toCharactersList(response.body());
+                        List<Character> characters = responseMapper.mapFromResponse(response.body());
                         saveCharacters(characters);
                         return new FetchCharactersResult.Success(characters);
                     }
