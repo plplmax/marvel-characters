@@ -1,10 +1,10 @@
 package com.github.plplmax.mrv.data.repository;
 
-import com.github.plplmax.mrv.data.cloud.source.CharactersCloudDataSource;
-import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSource;
 import com.github.plplmax.mrv.data.cloud.CharacterResponseMapper;
-import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
+import com.github.plplmax.mrv.data.cloud.source.CharactersCloudDataSource;
 import com.github.plplmax.mrv.data.local.CharacterEntity;
+import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
+import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSource;
 import com.github.plplmax.mrv.data.models.network.CharacterDataWrapperResponse;
 import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
@@ -32,13 +32,10 @@ public class CharactersRepositoryImpl implements CharactersRepository {
     }
 
     @Override
-    public FetchCharactersResult fetchCharacters() {
     public FetchCharactersResult fetchCharacters(int offset) {
         try {
-            List<CharacterEntity> localResponse = localDataSource.fetchCharacters();
             List<CharacterEntity> localResponse = localDataSource.fetchCharacters(offset);
             if (localResponse.isEmpty()) {
-                Response<CharacterDataWrapperResponse> response = cloudDataSource.fetchCharacters();
                 Response<CharacterDataWrapperResponse> response = cloudDataSource.fetchCharacters(offset);
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
