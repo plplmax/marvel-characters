@@ -13,8 +13,8 @@ public class CharactersLocalDataSourceImpl implements CharactersLocalDataSource 
     }
 
     @Override
-    public List<CharacterEntity> fetchCharacters() {
-        return dao.fetchCharacters();
+    public List<CharacterEntity> fetchCharacters(int offset) {
+        return dao.fetchCharacters(offset);
     }
 
     @Override
