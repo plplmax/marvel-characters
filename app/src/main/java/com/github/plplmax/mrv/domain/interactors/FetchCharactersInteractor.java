@@ -10,7 +10,7 @@ public class FetchCharactersInteractor {
         this.repository = repository;
     }
 
-    public FetchCharactersResult Execute() {
-        return repository.fetchCharacters();
+    public FetchCharactersResult Execute(int offset) {
+        return repository.fetchCharacters(offset);
     }
 }

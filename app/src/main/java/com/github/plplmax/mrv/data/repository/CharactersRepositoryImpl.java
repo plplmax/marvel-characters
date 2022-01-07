@@ -33,10 +33,13 @@ public class CharactersRepositoryImpl implements CharactersRepository {
 
     @Override
     public FetchCharactersResult fetchCharacters() {
+    public FetchCharactersResult fetchCharacters(int offset) {
         try {
             List<CharacterEntity> localResponse = localDataSource.fetchCharacters();
+            List<CharacterEntity> localResponse = localDataSource.fetchCharacters(offset);
             if (localResponse.isEmpty()) {
                 Response<CharacterDataWrapperResponse> response = cloudDataSource.fetchCharacters();
+                Response<CharacterDataWrapperResponse> response = cloudDataSource.fetchCharacters(offset);
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         List<Character> characters = responseMapper.mapFromResponse(response.body());
