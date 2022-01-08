@@ -7,6 +7,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 public interface CharactersService {
-    @GET("characters?limit=10")
+    @GET("characters?limit=20")
     Call<CharacterDataWrapperResponse> fetchCharacters(@Query("offset") int offset);
 }
