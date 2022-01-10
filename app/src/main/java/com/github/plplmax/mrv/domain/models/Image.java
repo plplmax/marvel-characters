@@ -24,7 +24,7 @@ public class Image {
     @SuppressWarnings("NullableProblems")
     @Override
     public String toString() {
-        return path + "." + extension;
+        return path + "/" + IMAGE_VARIANT + "." + extension;
     }
 
     @Override
