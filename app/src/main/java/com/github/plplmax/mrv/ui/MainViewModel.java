@@ -14,30 +14,47 @@ import java.util.concurrent.Executors;
 
 public class MainViewModel extends ViewModel {
     private final FetchCharactersInteractor interactor;
-    private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>();
+    private final ExecutorService service = Executors.newSingleThreadExecutor();
+
+    private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>(true);
     private final MutableLiveData<List<Character>> _success = new MutableLiveData<>();
     private final MutableLiveData<Exception> _fail = new MutableLiveData<>();
-    private final ExecutorService service = Executors.newSingleThreadExecutor();
-    public LiveData<Boolean> isLoading = _isLoading;
-    public LiveData<List<Character>> success = _success;
-    public LiveData<Exception> fail = _fail;
+
+    private boolean areAllCharactersLoaded = false;
+
+    public final LiveData<Boolean> isLoading = _isLoading;
+    public final LiveData<List<Character>> success = _success;
+    public final LiveData<Exception> fail = _fail;
 
     public MainViewModel(FetchCharactersInteractor interactor) {
         this.interactor = interactor;
-        fetchCharacters();
+        fetchCharacters(0);
     }
 
-    public void fetchCharacters() {
-        _isLoading.setValue(true);
+    public void fetchCharacters(int offset) {
+        if (offset == 0) _isLoading.setValue(true);
+
         service.execute(() -> {
-            FetchCharactersResult result = interactor.Execute();
+            FetchCharactersResult result = interactor.Execute(offset);
+
             if (result instanceof FetchCharactersResult.Success) {
-                _success.postValue(((FetchCharactersResult.Success) result).getData());
+                final List<Character> characters = ((FetchCharactersResult.Success) result).getData();
+
+                if (characters.isEmpty()) {
+                    areAllCharactersLoaded = true;
+                }
+
+                _success.postValue(characters);
             } else if (result instanceof FetchCharactersResult.Fail) {
                 _fail.postValue(((FetchCharactersResult.Fail) result).getException());
             }
-            _isLoading.postValue(false);
+
+            if (offset == 0) _isLoading.postValue(false);
         });
+    }
+
+    public boolean areAllCharactersLoaded() {
+        return areAllCharactersLoaded;
     }
 
     @Override
