@@ -3,9 +3,10 @@ package com.github.plplmax.mrv.domain.models;
 import java.util.Objects;
 
 public class Image {
-    private static final String IMAGE_UNAVAILABLE_NAME = "image_not_available";
-    private String path;
-    private String extension;
+    private static final String IMAGE_VARIANT = "portrait_xlarge";
+
+    private final String path;
+    private final String extension;
 
     public Image(String path, String extension) {
         this.path = path;
