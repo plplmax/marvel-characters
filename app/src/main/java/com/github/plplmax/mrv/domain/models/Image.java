@@ -3,9 +3,10 @@ package com.github.plplmax.mrv.domain.models;
 import java.util.Objects;
 
 public class Image {
-    private static final String IMAGE_UNAVAILABLE_NAME = "image_not_available";
-    private String path;
-    private String extension;
+    private static final String IMAGE_VARIANT = "portrait_xlarge";
+
+    private final String path;
+    private final String extension;
 
     public Image(String path, String extension) {
         this.path = path;
@@ -16,26 +17,14 @@ public class Image {
         return path;
     }
 
-    public void setPath(String path) {
-        this.path = path;
-    }
-
     public String getExtension() {
         return extension;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
-
-    public boolean isAvailable() {
-        return !path.contains(IMAGE_UNAVAILABLE_NAME);
     }
 
     @SuppressWarnings("NullableProblems")
     @Override
     public String toString() {
-        return path + "." + extension;
+        return path + "/" + IMAGE_VARIANT + "." + extension;
     }
 
     @Override

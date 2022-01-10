@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/black"
     android:orientation="vertical">
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        android:layout_width="64dp"
+        android:layout_width="48dp"
         android:layout_height="match_parent"
         android:layout_gravity="center" />
 
@@ -16,8 +16,6 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="@integer/characters_columns_count"
         tools:listitem="@layout/character_item" />
+
 </LinearLayout>

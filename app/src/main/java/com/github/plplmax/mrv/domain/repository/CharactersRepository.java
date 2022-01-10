@@ -6,7 +6,7 @@ import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
 import java.util.List;
 
 public interface CharactersRepository {
-    FetchCharactersResult fetchCharacters();
+    FetchCharactersResult fetchCharacters(int offset);
 
     void saveCharacters(List<Character> characters);
 }
