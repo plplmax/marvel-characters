@@ -22,6 +22,8 @@ import com.github.plplmax.mrv.ui.core.ResourceProvider;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.HttpUrl;
@@ -41,6 +43,7 @@ public class DataModule {
     private static final byte TIMEOUT_IN_SECONDS = 120;
 
     @Provides
+    @Singleton
     Retrofit provideRetrofit(OkHttpClient client) {
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -59,6 +62,7 @@ public class DataModule {
     }
 
     @Provides
+    @Singleton
     CharactersService provideCharactersService(@NonNull Retrofit retrofit) {
         return retrofit.create(CharactersService.class);
     }
@@ -74,17 +78,20 @@ public class DataModule {
     }
 
     @Provides
+    @Singleton
     CharacterDao provideCharacterDao(AppDatabase database) {
         return database.characterDao();
     }
 
     @Provides
+    @Singleton
     AppDatabase provideRoomDatabase(Context context) {
         return Room.databaseBuilder(context, AppDatabase.class, DATABASE_NAME)
                 .build();
     }
 
     @Provides
+    @Singleton
     CharactersRepository provideCharactersRepository(CharactersCloudDataSource cloudDataSource,
                                                      CharactersLocalDataSource localDataSource,
                                                      CharacterResponseMapper wrapperResponseMapper,
@@ -115,11 +122,13 @@ public class DataModule {
     }
 
     @Provides
+    @Singleton
     CharacterResponseMapper provideCharacterDataWrapperResponseMapper() {
         return new CharacterResponseMapper();
     }
 
     @Provides
+    @Singleton
     CharacterEntityMapper provideCharacterDataMapper() {
         return new CharacterEntityMapper();
     }

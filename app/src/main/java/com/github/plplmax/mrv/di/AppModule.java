@@ -6,6 +6,8 @@ import com.github.plplmax.mrv.domain.interactors.FetchCharactersInteractor;
 import com.github.plplmax.mrv.ui.MainViewModelFactory;
 import com.github.plplmax.mrv.ui.core.ResourceProvider;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -23,11 +25,13 @@ public class AppModule {
     }
 
     @Provides
+    @Singleton
     MainViewModelFactory provideMainViewModelFactory(FetchCharactersInteractor interactor) {
         return new MainViewModelFactory(interactor);
     }
 
     @Provides
+    @Singleton
     ResourceProvider provideResourceProvider(Context context) {
         return new ResourceProvider.Base(context);
     }
