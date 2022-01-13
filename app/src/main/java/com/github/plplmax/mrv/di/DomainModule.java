@@ -4,6 +4,8 @@ import com.github.plplmax.mrv.domain.core.Md5Provider;
 import com.github.plplmax.mrv.domain.interactors.FetchCharactersInteractor;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -15,6 +17,7 @@ public class DomainModule {
     }
 
     @Provides
+    @Singleton
     Md5Provider provideMd5Provider() {
         return new Md5Provider.Base();
     }
