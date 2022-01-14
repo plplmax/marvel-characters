@@ -8,6 +8,7 @@ import com.github.plplmax.mrv.domain.interactors.FetchCharactersInteractor;
 import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,6 +20,8 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>(true);
     private final MutableLiveData<List<Character>> _success = new MutableLiveData<>();
     private final MutableLiveData<Exception> _fail = new MutableLiveData<>();
+
+    public final List<Character> characters = new ArrayList<>();
 
     private boolean areAllCharactersLoaded = false;
 
@@ -39,12 +42,13 @@ public class MainViewModel extends ViewModel {
 
             if (result instanceof FetchCharactersResult.Success) {
                 final List<Character> characters = ((FetchCharactersResult.Success) result).getData();
+                this.characters.addAll(characters);
 
                 if (characters.isEmpty()) {
                     areAllCharactersLoaded = true;
                 }
 
-                _success.postValue(characters);
+                _success.postValue(this.characters);
             } else if (result instanceof FetchCharactersResult.Fail) {
                 _fail.postValue(((FetchCharactersResult.Fail) result).getException());
             }

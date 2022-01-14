@@ -21,7 +21,6 @@ import com.github.plplmax.mrv.Application;
 import com.github.plplmax.mrv.R;
 import com.github.plplmax.mrv.domain.models.Character;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -47,8 +46,6 @@ public class CharactersFragment extends Fragment {
     private OnCharacterClickListener characterClickListener;
 
     private final Handler handler = new Handler(Looper.getMainLooper());
-
-    private final List<Character> characters = new ArrayList<>();
 
     interface OnCharacterClickListener {
         void onCharacterClick(Character character);
@@ -87,7 +84,6 @@ public class CharactersFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         setupViews(view);
         setupRecyclerView();
 
@@ -119,7 +115,7 @@ public class CharactersFragment extends Fragment {
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return characters.size() - 1 >= position ? SPAN_COUNT_DEFAULT : SPAN_COUNT_FOOTER;
+                return viewModel.characters.size() - 1 >= position ? SPAN_COUNT_DEFAULT : SPAN_COUNT_FOOTER;
             }
         });
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -127,8 +123,7 @@ public class CharactersFragment extends Fragment {
 
     private void setupAdapter() {
         adapter = new CharactersAdapter(getContext(),
-                character -> characterClickListener.onCharacterClick(character),
-                characters);
+                character -> characterClickListener.onCharacterClick(character));
         recyclerView.setAdapter(adapter);
     }
 
@@ -151,11 +146,7 @@ public class CharactersFragment extends Fragment {
         viewModel.success.observe(getViewLifecycleOwner(), characters -> {
             adapter.setState(CharactersAdapter.State.DONE);
 
-            if (characters.isEmpty()) {
-                showMessage("The server returned an empty list");
-            } else {
-                updateCharacters(characters);
-            }
+            if (!viewModel.areAllCharactersLoaded()) updateCharacters(characters);
         });
     }
 
@@ -176,8 +167,7 @@ public class CharactersFragment extends Fragment {
     }
 
     private void updateCharacters(List<Character> characters) {
-        this.characters.addAll(characters);
-        adapter.notifyItemRangeInserted(this.characters.size(), characters.size());
+        adapter.submitList(characters);
     }
 
     private void loadNextCharacters(int offset) {

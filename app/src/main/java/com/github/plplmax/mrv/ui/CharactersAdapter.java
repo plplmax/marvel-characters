@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -15,15 +17,30 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.github.plplmax.mrv.R;
 import com.github.plplmax.mrv.domain.models.Character;
 
-import java.util.List;
-
-public class CharactersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CharactersAdapter extends ListAdapter<Character, RecyclerView.ViewHolder> {
     private static final byte DATA_VIEW_TYPE = 1;
     private static final byte FOOTER_VIEW_TYPE = 2;
 
+    private static final DiffUtil.ItemCallback<Character> DIFF_CALLBACK;
+
+    static {
+        DIFF_CALLBACK = new DiffUtil.ItemCallback<Character>() {
+            @Override
+            public boolean areItemsTheSame(@NonNull Character oldItem,
+                                           @NonNull Character newItem) {
+                return oldItem.getId() == newItem.getId();
+            }
+
+            @Override
+            public boolean areContentsTheSame(@NonNull Character oldItem,
+                                              @NonNull Character newItem) {
+                return oldItem.equals(newItem);
+            }
+        };
+    }
+
     private final CharactersFragment.OnCharacterClickListener onClickListener;
     private final LayoutInflater inflater;
-    private final List<Character> characters;
 
     private State state = State.LOADING;
 
@@ -34,10 +51,10 @@ public class CharactersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public CharactersAdapter(Context context,
-                             CharactersFragment.OnCharacterClickListener onClickListener,
-                             List<Character> characters) {
+                             CharactersFragment.OnCharacterClickListener onClickListener) {
+        super(DIFF_CALLBACK);
+
         this.onClickListener = onClickListener;
-        this.characters = characters;
         inflater = LayoutInflater.from(context);
     }
 
@@ -66,17 +83,17 @@ public class CharactersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     @Override
     public int getItemViewType(int position) {
-        if (characters.size() > position) return DATA_VIEW_TYPE;
+        if (getCurrentList().size() > position) return DATA_VIEW_TYPE;
         else return FOOTER_VIEW_TYPE;
     }
 
     @Override
     public int getItemCount() {
-        return characters.size() + (hasFooter() ? 1 : 0);
+        return getCurrentList().size() + (hasFooter() ? 1 : 0);
     }
 
     private boolean hasFooter() {
-        return characters.size() != 0 && (state == State.LOADING || state == State.ERROR);
+        return getCurrentList().size() != 0 && (state == State.LOADING || state == State.ERROR);
     }
 
     public class CharacterViewHolder extends RecyclerView.ViewHolder {
@@ -88,7 +105,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         }
 
         public void bind(int position) {
-            Character character = characters.get(position);
+            Character character = getCurrentList().get(position);
             String url = character.getThumbnail().toString();
 
             Glide.with(characterView.getContext())
