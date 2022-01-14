@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         ((Application) getApplicationContext()).appComponent.inject(this);
         viewModel = new ViewModelProvider(this, factory).get(MainViewModel.class);
-        openCharactersFragment();
+        if (savedInstanceState == null) openCharactersFragment();
     }
 
     private void openCharactersFragment() {
