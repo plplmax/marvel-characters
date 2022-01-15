@@ -41,6 +41,10 @@ public class MainActivity extends AppCompatActivity
     private void openCharacterDetailFragment(Character character) {
         CharacterDetailFragment fragment = CharacterDetailFragment.newInstance(character);
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(R.animator.slide_in_left,
+                        R.animator.slide_in_right,
+                        R.animator.slide_out_right,
+                        R.animator.slide_out_left)
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit();
