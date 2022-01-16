@@ -145,8 +145,7 @@ public class CharactersFragment extends Fragment {
     private void observeSuccess() {
         viewModel.success.observe(getViewLifecycleOwner(), characters -> {
             adapter.setState(CharactersAdapter.State.DONE);
-
-            if (!viewModel.areAllCharactersLoaded()) updateCharacters(characters);
+            updateCharacters(characters);
         });
     }
 
