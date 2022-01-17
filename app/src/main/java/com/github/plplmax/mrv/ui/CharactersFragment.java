@@ -32,8 +32,8 @@ public class CharactersFragment extends Fragment {
     @Inject
     Context applicationContext;
 
-    private static final byte SPAN_COUNT_DEFAULT = 1;
-    private static final byte SPAN_COUNT_FOOTER = 2;
+    private static final byte SPAN_SIZE_DEFAULT = 1;
+    private static final byte SPAN_SIZE_FOOTER = 2;
 
     private MainViewModel viewModel;
 
@@ -115,7 +115,7 @@ public class CharactersFragment extends Fragment {
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return viewModel.characters.size() - 1 >= position ? SPAN_COUNT_DEFAULT : SPAN_COUNT_FOOTER;
+                return viewModel.characters.size() - 1 >= position ? SPAN_SIZE_DEFAULT : SPAN_SIZE_FOOTER;
             }
         });
         recyclerView.setLayoutManager(gridLayoutManager);
