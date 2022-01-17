@@ -115,7 +115,7 @@ public class CharactersFragment extends Fragment {
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
-                return viewModel.characters.size() - 1 >= position ? SPAN_SIZE_DEFAULT : SPAN_SIZE_FOOTER;
+                return position >= adapter.getItemCount() ? SPAN_SIZE_FOOTER : SPAN_SIZE_DEFAULT;
             }
         });
         recyclerView.setLayoutManager(gridLayoutManager);
