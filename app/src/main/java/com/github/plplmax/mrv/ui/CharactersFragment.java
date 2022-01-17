@@ -52,7 +52,7 @@ public class CharactersFragment extends Fragment {
     }
 
     public CharactersFragment() {
-        super(R.layout.fragment_characters);
+        // Required empty public constructor
     }
 
     @Override
