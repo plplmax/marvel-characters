@@ -59,6 +59,22 @@ public class CharactersRepositoryImpl implements CharactersRepository {
     }
 
     @Override
+    public FetchCharactersResult fetchCharactersWithLimit(int limit) {
+        try {
+            List<CharacterEntity> localResponse = localDataSource.fetchCharactersWithLimit(limit);
+
+            if (localResponse.isEmpty())
+                return new FetchCharactersResult.Success(new ArrayList<>());
+
+            List<Character> characters = characterEntityMapper.mapFromEntity(localResponse);
+
+            return new FetchCharactersResult.Success(characters);
+        } catch (Exception e) {
+            return new FetchCharactersResult.Fail(e);
+        }
+    }
+
+    @Override
     public void saveCharacters(List<Character> characters) {
         List<CharacterEntity> charactersData = characterEntityMapper.mapToEntity(characters);
         localDataSource.saveCharacters(charactersData);
