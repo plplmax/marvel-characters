@@ -11,6 +11,6 @@ public class FetchCharactersInteractor {
     }
 
     public FetchCharactersResult Execute(int offset) {
-        return repository.fetchCharacters(offset);
+        return repository.fetchCharactersWithOffset(offset);
     }
 }

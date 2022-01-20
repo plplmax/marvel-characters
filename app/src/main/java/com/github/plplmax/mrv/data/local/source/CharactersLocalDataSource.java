@@ -5,7 +5,7 @@ import com.github.plplmax.mrv.data.local.CharacterEntity;
 import java.util.List;
 
 public interface CharactersLocalDataSource {
-    List<CharacterEntity> fetchCharacters(int offset);
 
+    List<CharacterEntity> fetchCharactersWithOffset(int offset);
     void saveCharacters(List<CharacterEntity> characters);
 }

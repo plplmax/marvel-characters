@@ -34,7 +34,7 @@ public class MainViewModel extends ViewModel {
         fetchCharacters(0);
     }
 
-    public void fetchCharacters(int offset) {
+    public void fetchCharactersWithOffset(int offset) {
         if (offset == 0) _isLoading.setValue(true);
 
         service.execute(() -> {

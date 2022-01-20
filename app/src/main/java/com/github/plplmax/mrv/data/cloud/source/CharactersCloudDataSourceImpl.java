@@ -15,7 +15,7 @@ public class CharactersCloudDataSourceImpl implements CharactersCloudDataSource 
     }
 
     @Override
-    public Response<CharacterDataWrapperResponse> fetchCharacters(int offset) throws IOException {
-        return service.fetchCharacters(offset).execute();
+    public Response<CharacterDataWrapperResponse> fetchCharactersWithOffset(int offset) throws IOException {
+        return service.fetchCharactersWithOffset(offset).execute();
     }
 }

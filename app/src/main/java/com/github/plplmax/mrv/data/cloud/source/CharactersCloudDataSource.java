@@ -7,5 +7,5 @@ import java.io.IOException;
 import retrofit2.Response;
 
 public interface CharactersCloudDataSource {
-    Response<CharacterDataWrapperResponse> fetchCharacters(int offset) throws IOException;
+    Response<CharacterDataWrapperResponse> fetchCharactersWithOffset(int offset) throws IOException;
 }
