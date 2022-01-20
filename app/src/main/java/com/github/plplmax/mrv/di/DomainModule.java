@@ -12,7 +12,7 @@ import dagger.Provides;
 @Module
 public class DomainModule {
     @Provides
-    FetchCharactersWithOffsetInteractor provideFetchCharactersInteractor(CharactersRepository repository) {
+    FetchCharactersWithOffsetInteractor provideFetchCharactersWithOffsetInteractor(CharactersRepository repository) {
         return new FetchCharactersWithOffsetInteractor(repository);
     }
 
