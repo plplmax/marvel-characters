@@ -171,6 +171,6 @@ public class CharactersFragment extends Fragment {
 
     private void loadNextCharacters(int offset) {
         adapter.setState(CharactersAdapter.State.LOADING);
-        viewModel.fetchCharacters(offset);
+        viewModel.fetchCharactersWithOffset(offset);
     }
 }

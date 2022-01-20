@@ -31,7 +31,7 @@ public class MainViewModel extends ViewModel {
 
     public MainViewModel(FetchCharactersInteractor interactor) {
         this.interactor = interactor;
-        fetchCharacters(0);
+        fetchCharactersWithOffset(0);
     }
 
     public void fetchCharactersWithOffset(int offset) {
