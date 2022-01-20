@@ -12,6 +12,9 @@ public interface CharacterDao {
     @Query("SELECT * FROM characters LIMIT 20 OFFSET :offset")
     List<CharacterEntity> fetchCharactersWithOffset(int offset);
 
+    @Query("SELECT * FROM characters LIMIT :limit")
+    List<CharacterEntity> fetchCharactersWithLimit(int limit);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void saveCharacters(List<CharacterEntity> characters);
 }

@@ -18,6 +18,11 @@ public class CharactersLocalDataSourceImpl implements CharactersLocalDataSource 
     }
 
     @Override
+    public List<CharacterEntity> fetchCharactersWithLimit(int limit) {
+        return dao.fetchCharactersWithLimit(limit);
+    }
+
+    @Override
     public void saveCharacters(List<CharacterEntity> characters) {
         dao.saveCharacters(characters);
     }
