@@ -4,18 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.github.plplmax.mrv.domain.interactors.FetchCharactersInteractor;
+import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithOffsetInteractor;
 
 public class MainViewModelFactory implements ViewModelProvider.Factory {
-    private final FetchCharactersInteractor interactor;
+    private final FetchCharactersWithOffsetInteractor fetchCharactersWithOffset;
 
-    public MainViewModelFactory(FetchCharactersInteractor interactor) {
-        this.interactor = interactor;
+    public MainViewModelFactory(FetchCharactersWithOffsetInteractor fetchCharactersWithOffset) {
+        this.fetchCharactersWithOffset = fetchCharactersWithOffset;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new MainViewModel(interactor);
+        return (T) new MainViewModel(fetchCharactersWithOffset);
     }
 }

@@ -3,10 +3,10 @@ package com.github.plplmax.mrv.domain.interactors;
 import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;
 
-public class FetchCharactersInteractor {
-    private final CharactersRepository repository;
+public class FetchCharactersWithOffsetInteractor {
+    public final CharactersRepository repository;
 
-    public FetchCharactersInteractor(CharactersRepository repository) {
+    public FetchCharactersWithOffsetInteractor(CharactersRepository repository) {
         this.repository = repository;
     }
 
