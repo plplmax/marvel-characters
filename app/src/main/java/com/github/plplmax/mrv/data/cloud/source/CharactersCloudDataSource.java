@@ -8,4 +8,6 @@ import retrofit2.Response;
 
 public interface CharactersCloudDataSource {
     Response<CharacterDataWrapperResponse> fetchCharactersWithOffset(int offset) throws IOException;
+
+    Response<CharacterDataWrapperResponse> fetchCharactersWithLimit(int limit) throws IOException;
 }
