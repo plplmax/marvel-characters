@@ -4,7 +4,7 @@ import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;
 
 public class FetchCharactersWithOffsetInteractor {
-    public final CharactersRepository repository;
+    private final CharactersRepository repository;
 
     public FetchCharactersWithOffsetInteractor(CharactersRepository repository) {
         this.repository = repository;
