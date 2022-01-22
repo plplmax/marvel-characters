@@ -15,17 +15,18 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class MainViewModel extends ViewModel {
+    private final ExecutorService service = Executors.newSingleThreadExecutor();
+
     private final FetchCharactersWithOffsetInteractor fetchCharactersWithOffset;
     private final FetchCharactersWithLimitInteractor fetchCharactersWithLimit;
-    private final ExecutorService service = Executors.newSingleThreadExecutor();
 
     private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>(true);
     private final MutableLiveData<List<Character>> _success = new MutableLiveData<>();
     private final MutableLiveData<Exception> _fail = new MutableLiveData<>();
+    private boolean areAllCharactersLoaded = false;
 
     public final List<Character> characters = new ArrayList<>();
 
-    private boolean areAllCharactersLoaded = false;
 
     public final LiveData<Boolean> isLoading = _isLoading;
     public final LiveData<List<Character>> success = _success;
