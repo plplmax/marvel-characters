@@ -81,6 +81,10 @@ public class CharactersAdapter extends ListAdapter<Character, RecyclerView.ViewH
         else return FOOTER_VIEW_TYPE;
     }
 
+    public int getSpanSize(int position) {
+        return getItemViewType(position);
+    }
+
     @Override
     public int getItemCount() {
         return getCurrentList().size() + (hasFooter() ? 1 : 0);
