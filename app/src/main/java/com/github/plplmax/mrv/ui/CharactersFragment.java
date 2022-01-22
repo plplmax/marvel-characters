@@ -22,8 +22,6 @@ import com.github.plplmax.mrv.Application;
 import com.github.plplmax.mrv.R;
 import com.github.plplmax.mrv.domain.models.Character;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 public class CharactersFragment extends Fragment {
