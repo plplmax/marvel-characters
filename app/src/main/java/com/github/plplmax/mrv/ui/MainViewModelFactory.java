@@ -17,6 +17,7 @@ public class MainViewModelFactory implements ViewModelProvider.Factory {
         this.fetchCharactersWithLimit = fetchCharactersWithLimit;
     }
 
+    @SuppressWarnings("unchecked")
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
