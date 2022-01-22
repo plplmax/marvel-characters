@@ -167,7 +167,7 @@ public class CharactersFragment extends Fragment {
 
                 if (viewModel.isOnScrolledActive() &&
                         !viewModel.areAllCharactersLoaded() &&
-                        gridLayoutManager.findLastVisibleItemPosition() >= gridLayoutManager.getItemCount() - 10) {
+                        gridLayoutManager.findLastVisibleItemPosition() >= adapter.getItemCount() - 10) {
                     viewModel.deactivateOnScrolled();
                     handler.post(() -> viewModel.fetchCharactersWithOffset(adapter.getItemCount()));
                 }
