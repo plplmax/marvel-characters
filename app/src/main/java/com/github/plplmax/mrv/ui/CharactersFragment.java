@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy;
 
 import com.github.plplmax.mrv.Application;
 import com.github.plplmax.mrv.R;
@@ -132,6 +133,7 @@ public class CharactersFragment extends Fragment {
     private void setupAdapter() {
         adapter = new CharactersAdapter(requireContext(),
                 character -> characterClickListener.onCharacterClick(character));
+        adapter.setStateRestorationPolicy(StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         recyclerView.setAdapter(adapter);
     }
 
