@@ -1,8 +1,9 @@
 package com.github.plplmax.mrv.domain.models;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Image {
+public class Image implements Serializable {
     private static final String IMAGE_VARIANT = "portrait_xlarge";
 
     private final String path;
