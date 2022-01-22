@@ -20,18 +20,16 @@ public class MainViewModel extends ViewModel {
     private final FetchCharactersWithOffsetInteractor fetchCharactersWithOffset;
     private final FetchCharactersWithLimitInteractor fetchCharactersWithLimit;
 
-    private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>(true);
-    private final MutableLiveData<List<Character>> _success = new MutableLiveData<>();
-    private final MutableLiveData<Exception> _fail = new MutableLiveData<>();
     private boolean onScrolledActive = true;
     private boolean areAllCharactersLoaded = false;
 
+    private final MutableLiveData<State> _state = new MutableLiveData<>();
+    public final LiveData<State> state = _state;
+
     public final List<Character> characters = new ArrayList<>();
 
+    public String failMessage;
 
-    public final LiveData<Boolean> isLoading = _isLoading;
-    public final LiveData<List<Character>> success = _success;
-    public final LiveData<Exception> fail = _fail;
 
     public MainViewModel(FetchCharactersWithOffsetInteractor fetchCharactersWithOffset,
                          FetchCharactersWithLimitInteractor fetchCharactersWithLimit) {
@@ -41,7 +39,7 @@ public class MainViewModel extends ViewModel {
     }
 
     public void fetchCharactersWithOffset(int offset) {
-        if (offset == 0) _isLoading.setValue(true);
+        _state.setValue(State.LOADING);
 
         service.execute(() -> {
             FetchCharactersResult result = fetchCharactersWithOffset.Execute(offset);
@@ -54,12 +52,15 @@ public class MainViewModel extends ViewModel {
                     areAllCharactersLoaded = true;
                 }
 
-                _success.postValue(this.characters);
+                _state.postValue(State.DONE);
             } else if (result instanceof FetchCharactersResult.Fail) {
-                _fail.postValue(((FetchCharactersResult.Fail) result).getException());
+                failMessage = ((FetchCharactersResult.Fail) result).getException().getMessage();
+                _state.postValue(State.ERROR);
             }
+        });
+    }
 
-            if (offset == 0) _isLoading.postValue(false);
+
         });
     }
 

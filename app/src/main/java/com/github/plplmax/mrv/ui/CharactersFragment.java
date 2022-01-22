@@ -86,9 +86,7 @@ public class CharactersFragment extends Fragment {
         setupViews(view);
         setupRecyclerView();
 
-        observeSuccess();
-        observeLoading();
-        observeFail();
+        initState();
     }
 
     @Override
@@ -146,42 +144,30 @@ public class CharactersFragment extends Fragment {
                 if (viewModel.isOnScrolledActive() &&
                         !viewModel.areAllCharactersLoaded() &&
                         gridLayoutManager.findLastVisibleItemPosition() >= gridLayoutManager.getItemCount() - 10) {
-                    handler.post(() -> loadNextCharacters(gridLayoutManager.getItemCount()));
                     viewModel.deactivateOnScrolled();
+                    handler.post(() -> viewModel.fetchCharactersWithOffset(adapter.getItemCount()));
                 }
             }
         });
     }
 
-    private void observeSuccess() {
-        viewModel.success.observe(getViewLifecycleOwner(), characters -> {
-            adapter.setState(State.DONE);
-            updateCharacters(characters);
-        });
-    }
+    private void initState() {
+        viewModel.state.observe(getViewLifecycleOwner(), state -> {
+            if (!viewModel.areCharactersEmpty()) {
+                adapter.submitList(viewModel.characters);
+                adapter.setState(state);
+            }
 
-    private void observeLoading() {
-        viewModel.isLoading.observe(getViewLifecycleOwner(),
-                aBoolean -> progressBar.setVisibility(aBoolean ? View.VISIBLE : View.GONE));
-    }
+            if (state == State.ERROR) showMessage(viewModel.failMessage);
+            if (state != State.LOADING) viewModel.activateOnScrolled();
 
-    private void observeFail() {
-        viewModel.fail.observe(getViewLifecycleOwner(), e -> {
-            showMessage(e.getMessage());
-            adapter.setState(State.ERROR);
+            progressBar.setVisibility(viewModel.areCharactersEmpty()
+                    && state == State.LOADING ? View.VISIBLE : View.GONE);
+
         });
     }
 
     private void showMessage(String message) {
         Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show();
-    }
-
-    private void updateCharacters(List<Character> characters) {
-        adapter.submitList(characters);
-    }
-
-    private void loadNextCharacters(int offset) {
-        adapter.setState(State.LOADING);
-        viewModel.fetchCharactersWithOffset(offset);
     }
 }
