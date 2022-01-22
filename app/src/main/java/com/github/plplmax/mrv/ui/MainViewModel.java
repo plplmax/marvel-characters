@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithLimitInteractor;
 import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithOffsetInteractor;
 import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
@@ -15,6 +16,7 @@ import java.util.concurrent.Executors;
 
 public class MainViewModel extends ViewModel {
     private final FetchCharactersWithOffsetInteractor fetchCharactersWithOffset;
+    private final FetchCharactersWithLimitInteractor fetchCharactersWithLimit;
     private final ExecutorService service = Executors.newSingleThreadExecutor();
 
     private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>(true);
@@ -29,8 +31,10 @@ public class MainViewModel extends ViewModel {
     public final LiveData<List<Character>> success = _success;
     public final LiveData<Exception> fail = _fail;
 
-    public MainViewModel(FetchCharactersWithOffsetInteractor fetchCharactersWithOffset) {
+    public MainViewModel(FetchCharactersWithOffsetInteractor fetchCharactersWithOffset,
+                         FetchCharactersWithLimitInteractor fetchCharactersWithLimit) {
         this.fetchCharactersWithOffset = fetchCharactersWithOffset;
+        this.fetchCharactersWithLimit = fetchCharactersWithLimit;
         fetchCharactersWithOffset(0);
     }
 

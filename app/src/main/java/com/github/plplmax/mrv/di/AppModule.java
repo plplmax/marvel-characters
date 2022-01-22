@@ -2,6 +2,7 @@ package com.github.plplmax.mrv.di;
 
 import android.content.Context;
 
+import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithLimitInteractor;
 import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithOffsetInteractor;
 import com.github.plplmax.mrv.ui.MainViewModelFactory;
 import com.github.plplmax.mrv.ui.core.ResourceProvider;
@@ -27,8 +28,9 @@ public class AppModule {
     @Provides
     @Singleton
     MainViewModelFactory provideMainViewModelFactory(
-            FetchCharactersWithOffsetInteractor fetchCharactersWithOffset) {
-        return new MainViewModelFactory(fetchCharactersWithOffset);
+            FetchCharactersWithOffsetInteractor fetchCharactersWithOffset,
+            FetchCharactersWithLimitInteractor fetchCharactersWithLimit) {
+        return new MainViewModelFactory(fetchCharactersWithOffset, fetchCharactersWithLimit);
     }
 
     @Provides
