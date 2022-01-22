@@ -66,6 +66,14 @@ public class MainViewModel extends ViewModel {
         return areAllCharactersLoaded;
     }
 
+    public boolean areCharactersEmpty() {
+        return characters.isEmpty();
+    }
+
+    public int fetchCharactersCount() {
+        return characters.size();
+    }
+
     @Override
     protected void onCleared() {
         super.onCleared();
