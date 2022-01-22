@@ -33,6 +33,7 @@ public class CharactersFragment extends Fragment {
     @Inject
     Context applicationContext;
 
+    private static final String PREVIOUS_ITEM_COUNT_KEY = "previous_item_count_key";
 
     private MainViewModel viewModel;
 
@@ -69,20 +70,34 @@ public class CharactersFragment extends Fragment {
 
         ((Application) requireActivity().getApplicationContext()).appComponent
                 .inject(this);
+
+        viewModel = new ViewModelProvider(requireActivity(), factory).get(MainViewModel.class);
+
+        if (viewModel.areCharactersEmpty()
+                && savedInstanceState != null
+                && savedInstanceState.containsKey(PREVIOUS_ITEM_COUNT_KEY)) {
+            int previousItemCount = savedInstanceState.getInt(PREVIOUS_ITEM_COUNT_KEY);
+            viewModel.lastCharactersLoadedCount = previousItemCount;
+        }
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        viewModel = new ViewModelProvider(requireActivity(), factory).get(MainViewModel.class);
-
         return inflater.inflate(R.layout.fragment_characters, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (viewModel.areCharactersEmpty()) {
+            if (viewModel.lastCharactersLoadedCount != 0)
+                viewModel.fetchCharactersWithLimit(viewModel.lastCharactersLoadedCount);
+            else viewModel.fetchCharactersWithOffset(0);
+        }
+
         setupViews(view);
         setupRecyclerView();
 
@@ -104,6 +119,17 @@ public class CharactersFragment extends Fragment {
         characterClickListener = null;
 
         super.onDestroy();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        if (viewModel.areCharactersEmpty()) {
+            outState.putInt(PREVIOUS_ITEM_COUNT_KEY, viewModel.lastCharactersLoadedCount);
+        } else {
+            outState.putInt(PREVIOUS_ITEM_COUNT_KEY, viewModel.fetchCharactersCount());
+        }
+
+        super.onSaveInstanceState(outState);
     }
 
     private void setupViews(@NonNull View view) {

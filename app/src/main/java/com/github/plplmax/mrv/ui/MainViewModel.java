@@ -28,6 +28,7 @@ public class MainViewModel extends ViewModel {
 
     public final List<Character> characters = new ArrayList<>();
 
+    public int lastCharactersLoadedCount = 0;
     public String failMessage;
 
 
@@ -35,7 +36,6 @@ public class MainViewModel extends ViewModel {
                          FetchCharactersWithLimitInteractor fetchCharactersWithLimit) {
         this.fetchCharactersWithOffset = fetchCharactersWithOffset;
         this.fetchCharactersWithLimit = fetchCharactersWithLimit;
-        fetchCharactersWithOffset(0);
     }
 
     public void fetchCharactersWithOffset(int offset) {
