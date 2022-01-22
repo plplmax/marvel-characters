@@ -130,7 +130,7 @@ public class CharactersFragment extends Fragment {
     }
 
     private void setupAdapter() {
-        adapter = new CharactersAdapter(getContext(),
+        adapter = new CharactersAdapter(requireContext(),
                 character -> characterClickListener.onCharacterClick(character));
         recyclerView.setAdapter(adapter);
     }
