@@ -144,7 +144,7 @@ public class CharactersFragment extends Fragment {
 
     private void observeSuccess() {
         viewModel.success.observe(getViewLifecycleOwner(), characters -> {
-            adapter.setState(CharactersAdapter.State.DONE);
+            adapter.setState(State.DONE);
             updateCharacters(characters);
         });
     }
@@ -157,7 +157,7 @@ public class CharactersFragment extends Fragment {
     private void observeFail() {
         viewModel.fail.observe(getViewLifecycleOwner(), e -> {
             showMessage(e.getMessage());
-            adapter.setState(CharactersAdapter.State.ERROR);
+            adapter.setState(State.ERROR);
         });
     }
 
@@ -170,7 +170,7 @@ public class CharactersFragment extends Fragment {
     }
 
     private void loadNextCharacters(int offset) {
-        adapter.setState(CharactersAdapter.State.LOADING);
+        adapter.setState(State.LOADING);
         viewModel.fetchCharactersWithOffset(offset);
     }
 }

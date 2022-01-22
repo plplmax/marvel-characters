@@ -44,12 +44,6 @@ public class CharactersAdapter extends ListAdapter<Character, RecyclerView.ViewH
 
     private State state = State.LOADING;
 
-    enum State {
-        DONE,
-        LOADING,
-        ERROR
-    }
-
     public CharactersAdapter(Context context,
                              CharactersFragment.OnCharacterClickListener onClickListener) {
         super(DIFF_CALLBACK);
