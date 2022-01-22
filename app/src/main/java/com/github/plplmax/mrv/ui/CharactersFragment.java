@@ -143,10 +143,11 @@ public class CharactersFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                if (!adapter.isStateLoading() &&
+                if (viewModel.isOnScrolledActive() &&
                         !viewModel.areAllCharactersLoaded() &&
                         gridLayoutManager.findLastVisibleItemPosition() >= gridLayoutManager.getItemCount() - 10) {
                     handler.post(() -> loadNextCharacters(gridLayoutManager.getItemCount()));
+                    viewModel.deactivateOnScrolled();
                 }
             }
         });

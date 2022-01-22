@@ -23,6 +23,7 @@ public class MainViewModel extends ViewModel {
     private final MutableLiveData<Boolean> _isLoading = new MutableLiveData<>(true);
     private final MutableLiveData<List<Character>> _success = new MutableLiveData<>();
     private final MutableLiveData<Exception> _fail = new MutableLiveData<>();
+    private boolean onScrolledActive = true;
     private boolean areAllCharactersLoaded = false;
 
     public final List<Character> characters = new ArrayList<>();
@@ -60,6 +61,18 @@ public class MainViewModel extends ViewModel {
 
             if (offset == 0) _isLoading.postValue(false);
         });
+    }
+
+    public boolean isOnScrolledActive() {
+        return onScrolledActive;
+    }
+
+    public void activateOnScrolled() {
+        onScrolledActive = true;
+    }
+
+    public void deactivateOnScrolled() {
+        onScrolledActive = false;
     }
 
     public boolean areAllCharactersLoaded() {

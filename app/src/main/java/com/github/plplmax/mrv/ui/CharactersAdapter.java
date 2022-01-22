@@ -133,8 +133,4 @@ public class CharactersAdapter extends ListAdapter<Character, RecyclerView.ViewH
         this.state = state;
         notifyItemChanged(super.getItemCount());
     }
-
-    public boolean isStateLoading() {
-        return state == State.LOADING;
-    }
 }
