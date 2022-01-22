@@ -60,7 +60,26 @@ public class MainViewModel extends ViewModel {
         });
     }
 
+    public void fetchCharactersWithLimit(int limit) {
+        _state.setValue(State.LOADING);
 
+        service.execute(() -> {
+            FetchCharactersResult result = fetchCharactersWithLimit.Execute(limit);
+
+            if (result instanceof FetchCharactersResult.Success) {
+                final List<Character> characters = ((FetchCharactersResult.Success) result).getData();
+                this.characters.addAll(characters);
+
+                if (characters.isEmpty()) {
+                    fetchCharactersWithOffset(0);
+                    return;
+                }
+
+                _state.postValue(State.DONE);
+            } else if (result instanceof FetchCharactersResult.Fail) {
+                failMessage = ((FetchCharactersResult.Fail) result).getException().getMessage();
+                _state.postValue(State.ERROR);
+            }
         });
     }
 
