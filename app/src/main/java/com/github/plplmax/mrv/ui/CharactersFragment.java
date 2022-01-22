@@ -89,6 +89,16 @@ public class CharactersFragment extends Fragment {
     }
 
     @Override
+    public void onDestroyView() {
+        recyclerView = null;
+        progressBar = null;
+        adapter = null;
+        gridLayoutManager = null;
+
+        super.onDestroyView();
+    }
+
+    @Override
     public void onDestroy() {
         characterClickListener = null;
 
