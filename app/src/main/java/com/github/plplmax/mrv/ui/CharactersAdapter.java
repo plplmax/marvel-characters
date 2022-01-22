@@ -77,7 +77,7 @@ public class CharactersAdapter extends ListAdapter<Character, RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        if (getCurrentList().size() > position) return DATA_VIEW_TYPE;
+        if (super.getItemCount() > position) return DATA_VIEW_TYPE;
         else return FOOTER_VIEW_TYPE;
     }
 
@@ -87,11 +87,11 @@ public class CharactersAdapter extends ListAdapter<Character, RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return getCurrentList().size() + (hasFooter() ? 1 : 0);
+        return super.getItemCount() + (hasFooter() ? 1 : 0);
     }
 
     private boolean hasFooter() {
-        return getCurrentList().size() != 0 && (state == State.LOADING || state == State.ERROR);
+        return super.getItemCount() != 0 && (state == State.LOADING || state == State.ERROR);
     }
 
     public class CharacterViewHolder extends RecyclerView.ViewHolder {
@@ -131,7 +131,7 @@ public class CharactersAdapter extends ListAdapter<Character, RecyclerView.ViewH
 
     public void setState(State state) {
         this.state = state;
-        notifyItemChanged(getItemCount());
+        notifyItemChanged(super.getItemCount());
     }
 
     public boolean isStateLoading() {
