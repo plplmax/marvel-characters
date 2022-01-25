@@ -10,10 +10,9 @@ import com.github.plplmax.mrv.data.local.AppDatabase;
 import com.github.plplmax.mrv.data.local.CharacterDao;
 import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
 import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSource;
-import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSourceImpl;
 import com.github.plplmax.mrv.data.remote.CharacterResponseMapper;
-import com.github.plplmax.mrv.data.remote.CharactersService;
 import com.github.plplmax.mrv.data.remote.CharactersRemoteDataSource;
+import com.github.plplmax.mrv.data.remote.CharactersService;
 import com.github.plplmax.mrv.data.repository.CharactersRepositoryImpl;
 import com.github.plplmax.mrv.domain.core.Md5Provider;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;
@@ -73,7 +72,7 @@ public class DataModule {
 
     @Provides
     CharactersLocalDataSource provideLocalDataSource(CharacterDao dao) {
-        return new CharactersLocalDataSourceImpl(dao);
+        return new CharactersLocalDataSource.Base(dao);
     }
 
     @Provides
