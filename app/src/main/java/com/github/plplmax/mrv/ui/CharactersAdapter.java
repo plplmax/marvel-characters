@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.github.plplmax.mrv.R;
 import com.github.plplmax.mrv.domain.models.Character;
+import com.github.plplmax.mrv.ui.core.State;
 
 public class CharactersAdapter extends ListAdapter<Character, RecyclerView.ViewHolder> {
     private static final byte DATA_VIEW_TYPE = 1;

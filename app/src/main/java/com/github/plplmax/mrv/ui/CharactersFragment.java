@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy;
 import com.github.plplmax.mrv.Application;
 import com.github.plplmax.mrv.R;
 import com.github.plplmax.mrv.domain.models.Character;
+import com.github.plplmax.mrv.ui.core.State;
 
 import javax.inject.Inject;
 

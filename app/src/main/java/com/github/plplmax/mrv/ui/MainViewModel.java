@@ -8,6 +8,7 @@ import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithLimitInterac
 import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithOffsetInteractor;
 import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
+import com.github.plplmax.mrv.ui.core.State;
 
 import java.util.ArrayList;
 import java.util.List;
