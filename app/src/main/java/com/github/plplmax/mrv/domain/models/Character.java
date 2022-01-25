@@ -5,9 +5,9 @@ import java.util.Objects;
 
 public class Character implements Serializable {
     private int id;
-    private String name;
-    private String description;
-    private Image thumbnail;
+    private final String name;
+    private final String description;
+    private final Image thumbnail;
 
     public Character(int id, String name, String description, Image thumbnail) {
         setId(id);
