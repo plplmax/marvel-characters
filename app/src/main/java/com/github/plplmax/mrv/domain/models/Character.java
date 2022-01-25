@@ -10,10 +10,10 @@ public class Character implements Serializable {
     private Image thumbnail;
 
     public Character(int id, String name, String description, Image thumbnail) {
-        this.name = name;
-        this.description = description;
-        this.thumbnail = thumbnail;
         setId(id);
+        this.name = Objects.requireNonNull(name);
+        this.description = Objects.requireNonNull(description);
+        this.thumbnail = Objects.requireNonNull(thumbnail);
     }
 
     public int getId() {
