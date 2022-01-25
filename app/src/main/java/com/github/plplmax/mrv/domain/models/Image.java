@@ -10,8 +10,8 @@ public class Image implements Serializable {
     private final String extension;
 
     public Image(String path, String extension) {
-        this.path = path;
-        this.extension = extension;
+        this.path = Objects.requireNonNull(path);
+        this.extension = Objects.requireNonNull(extension);
     }
 
     public String getPath() {
