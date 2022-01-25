@@ -27,7 +27,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    CharactersViewModelFactory provideMainViewModelFactory(
+    CharactersViewModelFactory provideCharactersViewModelFactory(
             FetchCharactersWithOffsetInteractor fetchCharactersWithOffset,
             FetchCharactersWithLimitInteractor fetchCharactersWithLimit) {
         return new CharactersViewModelFactory(fetchCharactersWithOffset, fetchCharactersWithLimit);
