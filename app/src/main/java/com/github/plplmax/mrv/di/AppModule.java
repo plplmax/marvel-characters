@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithLimitInteractor;
 import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithOffsetInteractor;
-import com.github.plplmax.mrv.ui.CharactersViewModelFactory;
+import com.github.plplmax.mrv.ui.characters.CharactersViewModelFactory;
 import com.github.plplmax.mrv.ui.core.ResourceProvider;
 
 import javax.inject.Singleton;

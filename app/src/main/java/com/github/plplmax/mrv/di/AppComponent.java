@@ -1,6 +1,6 @@
 package com.github.plplmax.mrv.di;
 
-import com.github.plplmax.mrv.ui.CharactersFragment;
+import com.github.plplmax.mrv.ui.characters.CharactersFragment;
 import com.github.plplmax.mrv.ui.MainActivity;
 
 import javax.inject.Singleton;

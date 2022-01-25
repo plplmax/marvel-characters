@@ -8,6 +8,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.github.plplmax.mrv.Application;
 import com.github.plplmax.mrv.R;
 import com.github.plplmax.mrv.domain.models.Character;
+import com.github.plplmax.mrv.ui.characters.CharactersFragment;
+import com.github.plplmax.mrv.ui.characters.CharactersViewModel;
+import com.github.plplmax.mrv.ui.characters.CharactersViewModelFactory;
 import com.github.plplmax.mrv.ui.detail.CharacterDetailFragment;
 
 import javax.inject.Inject;

@@ -1,4 +1,4 @@
-package com.github.plplmax.mrv.ui;
+package com.github.plplmax.mrv.ui.characters;
 
 import android.util.Log;
 

@@ -1,4 +1,4 @@
-package com.github.plplmax.mrv.ui;
+package com.github.plplmax.mrv.ui.characters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -92,7 +92,7 @@ public class CharactersAdapter extends ListAdapter<Character, RecyclerView.ViewH
     }
 
     private boolean hasFooter() {
-        return super.getItemCount() != 0 && (state == State.LOADING || state == State.ERROR);
+        return super.getItemCount() != 0 && (state == State.LOADING);
     }
 
     public class CharacterViewHolder extends RecyclerView.ViewHolder {
