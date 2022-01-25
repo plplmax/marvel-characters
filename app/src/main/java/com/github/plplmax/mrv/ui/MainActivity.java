@@ -21,17 +21,19 @@ public class MainActivity extends AppCompatActivity
     CharactersViewModelFactory factory;
 
     @Override
-    public void onCharacterClick(Character character) {
-        openCharacterDetailFragment(character);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         ((Application) getApplicationContext()).appComponent.inject(this);
         new ViewModelProvider(this, factory).get(CharactersViewModel.class);
+
         if (savedInstanceState == null) openCharactersFragment();
+    }
+
+    @Override
+    public void onCharacterClick(Character character) {
+        openCharacterDetailFragment(character);
     }
 
     private void openCharactersFragment() {
