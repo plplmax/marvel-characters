@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity
         implements CharactersFragment.OnCharacterClickListener {
     @Inject
     CharactersViewModelFactory factory;
-    private CharactersViewModel viewModel;
 
     @Override
     public void onCharacterClick(Character character) {
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ((Application) getApplicationContext()).appComponent.inject(this);
-        viewModel = new ViewModelProvider(this, factory).get(CharactersViewModel.class);
+        new ViewModelProvider(this, factory).get(CharactersViewModel.class);
         if (savedInstanceState == null) openCharactersFragment();
     }
 
