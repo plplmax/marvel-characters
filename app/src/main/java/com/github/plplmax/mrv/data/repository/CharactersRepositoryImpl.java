@@ -5,7 +5,7 @@ import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
 import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSource;
 import com.github.plplmax.mrv.data.models.network.CharacterDataWrapperResponse;
 import com.github.plplmax.mrv.data.remote.CharacterResponseMapper;
-import com.github.plplmax.mrv.data.remote.source.CharactersRemoteDataSource;
+import com.github.plplmax.mrv.data.remote.CharactersRemoteDataSource;
 import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;

@@ -13,7 +13,7 @@ import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSource;
 import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSourceImpl;
 import com.github.plplmax.mrv.data.remote.CharacterResponseMapper;
 import com.github.plplmax.mrv.data.remote.CharactersService;
-import com.github.plplmax.mrv.data.remote.source.CharactersRemoteDataSource;
+import com.github.plplmax.mrv.data.remote.CharactersRemoteDataSource;
 import com.github.plplmax.mrv.data.repository.CharactersRepositoryImpl;
 import com.github.plplmax.mrv.domain.core.Md5Provider;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;

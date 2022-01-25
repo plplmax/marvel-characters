@@ -1,7 +1,6 @@
-package com.github.plplmax.mrv.data.remote.source;
+package com.github.plplmax.mrv.data.remote;
 
 import com.github.plplmax.mrv.data.models.network.CharacterDataWrapperResponse;
-import com.github.plplmax.mrv.data.remote.CharactersService;
 
 import java.io.IOException;
 
