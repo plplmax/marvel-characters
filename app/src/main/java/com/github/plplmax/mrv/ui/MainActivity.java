@@ -3,6 +3,8 @@ package com.github.plplmax.mrv.ui;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.github.plplmax.mrv.Application;
@@ -37,20 +39,25 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void openCharactersFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, CharactersFragment.class, null)
-                .commit();
+        CharactersFragment fragment = new CharactersFragment();
+        openFragment(fragment, false);
     }
 
     private void openCharacterDetailFragment(Character character) {
         CharacterDetailFragment fragment = CharacterDetailFragment.newInstance(character);
-        getSupportFragmentManager().beginTransaction()
+        openFragment(fragment, true);
+    }
+
+    private void openFragment(Fragment fragment, boolean needAddToBackStack) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction()
                 .setCustomAnimations(R.animator.slide_in_left,
                         R.animator.slide_in_right,
                         R.animator.slide_out_right,
                         R.animator.slide_out_left)
-                .replace(R.id.fragment_container, fragment)
-                .addToBackStack(null)
-                .commit();
+                .replace(R.id.fragment_container, fragment);
+
+        if (needAddToBackStack) transaction.addToBackStack(null);
+
+        transaction.commit();
     }
 }
