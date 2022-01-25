@@ -1,4 +1,4 @@
-package com.github.plplmax.mrv.ui.detailscreen;
+package com.github.plplmax.mrv.ui.detail;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

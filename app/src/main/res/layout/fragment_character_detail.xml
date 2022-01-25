@@ -7,7 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="14dp"
-    tools:context=".ui.detailscreen.CharacterDetailFragment">
+    tools:context=".ui.detail.CharacterDetailFragment">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
