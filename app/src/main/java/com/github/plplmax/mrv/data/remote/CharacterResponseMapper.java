@@ -3,7 +3,7 @@ package com.github.plplmax.mrv.data.remote;
 import androidx.annotation.NonNull;
 
 import com.github.plplmax.mrv.data.core.ResponseMapper;
-import com.github.plplmax.mrv.data.models.network.CharacterDataWrapperResponse;
+import com.github.plplmax.mrv.data.remote.responses.CharacterDataWrapperResponse;
 import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.models.Image;
 

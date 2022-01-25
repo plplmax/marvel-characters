@@ -4,10 +4,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.github.plplmax.mrv.data.core.ResponseMapper;
-import com.github.plplmax.mrv.data.models.network.CharacterDataContainerResponse;
-import com.github.plplmax.mrv.data.models.network.CharacterDataWrapperResponse;
-import com.github.plplmax.mrv.data.models.network.CharacterResponse;
-import com.github.plplmax.mrv.data.models.network.ImageResponse;
+import com.github.plplmax.mrv.data.remote.responses.CharacterDataContainerResponse;
+import com.github.plplmax.mrv.data.remote.responses.CharacterDataWrapperResponse;
+import com.github.plplmax.mrv.data.remote.responses.CharacterResponse;
+import com.github.plplmax.mrv.data.remote.responses.ImageResponse;
 import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.models.Image;
 

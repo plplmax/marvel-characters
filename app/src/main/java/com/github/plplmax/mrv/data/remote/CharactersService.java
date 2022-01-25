@@ -1,6 +1,6 @@
 package com.github.plplmax.mrv.data.remote;
 
-import com.github.plplmax.mrv.data.models.network.CharacterDataWrapperResponse;
+import com.github.plplmax.mrv.data.remote.responses.CharacterDataWrapperResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

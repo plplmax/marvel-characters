@@ -1,4 +1,4 @@
-package com.github.plplmax.mrv.data.models.network;
+package com.github.plplmax.mrv.data.remote.responses;
 
 public class ImageResponse {
     public String path;
