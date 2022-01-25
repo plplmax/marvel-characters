@@ -10,10 +10,10 @@ public class Character implements Serializable {
     private Image thumbnail;
 
     public Character(int id, String name, String description, Image thumbnail) {
-        this.id = id;
         this.name = name;
         this.description = description;
         this.thumbnail = thumbnail;
+        setId(id);
     }
 
     public int getId() {
@@ -21,6 +21,8 @@ public class Character implements Serializable {
     }
 
     public void setId(int id) {
+        if (id < 1) throw new IllegalArgumentException("id must be greater than 0");
+
         this.id = id;
     }
 
