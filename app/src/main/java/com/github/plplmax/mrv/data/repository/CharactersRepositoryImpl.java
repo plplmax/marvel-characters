@@ -1,11 +1,11 @@
 package com.github.plplmax.mrv.data.repository;
 
-import com.github.plplmax.mrv.data.cloud.CharacterResponseMapper;
-import com.github.plplmax.mrv.data.cloud.source.CharactersCloudDataSource;
 import com.github.plplmax.mrv.data.local.CharacterEntity;
 import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
 import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSource;
 import com.github.plplmax.mrv.data.models.network.CharacterDataWrapperResponse;
+import com.github.plplmax.mrv.data.remote.CharacterResponseMapper;
+import com.github.plplmax.mrv.data.remote.source.CharactersRemoteDataSource;
 import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;
@@ -16,16 +16,16 @@ import java.util.List;
 import retrofit2.Response;
 
 public class CharactersRepositoryImpl implements CharactersRepository {
-    private final CharactersCloudDataSource cloudDataSource;
+    private final CharactersRemoteDataSource remoteDataSource;
     private final CharactersLocalDataSource localDataSource;
     private final CharacterResponseMapper responseMapper;
     private final CharacterEntityMapper characterEntityMapper;
 
-    public CharactersRepositoryImpl(CharactersCloudDataSource cloudDataSource,
+    public CharactersRepositoryImpl(CharactersRemoteDataSource remoteDataSource,
                                     CharactersLocalDataSource localDataSource,
                                     CharacterResponseMapper responseMapper,
                                     CharacterEntityMapper characterEntityMapper) {
-        this.cloudDataSource = cloudDataSource;
+        this.remoteDataSource = remoteDataSource;
         this.localDataSource = localDataSource;
         this.responseMapper = responseMapper;
         this.characterEntityMapper = characterEntityMapper;
@@ -36,7 +36,7 @@ public class CharactersRepositoryImpl implements CharactersRepository {
         try {
             List<CharacterEntity> localResponse = localDataSource.fetchCharactersWithOffset(offset);
             if (localResponse.isEmpty()) {
-                Response<CharacterDataWrapperResponse> response = cloudDataSource.fetchCharactersWithOffset(offset);
+                Response<CharacterDataWrapperResponse> response = remoteDataSource.fetchCharactersWithOffset(offset);
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         List<Character> characters = responseMapper.mapFromResponse(response.body());

@@ -6,15 +6,15 @@ import androidx.annotation.NonNull;
 import androidx.room.Room;
 
 import com.github.plplmax.mrv.R;
-import com.github.plplmax.mrv.data.cloud.CharactersService;
-import com.github.plplmax.mrv.data.cloud.source.CharactersCloudDataSource;
-import com.github.plplmax.mrv.data.cloud.source.CharactersCloudDataSourceImpl;
 import com.github.plplmax.mrv.data.local.AppDatabase;
 import com.github.plplmax.mrv.data.local.CharacterDao;
+import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
 import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSource;
 import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSourceImpl;
-import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
-import com.github.plplmax.mrv.data.cloud.CharacterResponseMapper;
+import com.github.plplmax.mrv.data.remote.CharacterResponseMapper;
+import com.github.plplmax.mrv.data.remote.CharactersService;
+import com.github.plplmax.mrv.data.remote.source.CharactersRemoteDataSource;
+import com.github.plplmax.mrv.data.remote.source.CharactersRemoteDataSourceImpl;
 import com.github.plplmax.mrv.data.repository.CharactersRepositoryImpl;
 import com.github.plplmax.mrv.domain.core.Md5Provider;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;
@@ -68,8 +68,8 @@ public class DataModule {
     }
 
     @Provides
-    CharactersCloudDataSource provideCloudDataSource(CharactersService service) {
-        return new CharactersCloudDataSourceImpl(service);
+    CharactersRemoteDataSource provideRemoteDataSource(CharactersService service) {
+        return new CharactersRemoteDataSourceImpl(service);
     }
 
     @Provides
@@ -92,11 +92,11 @@ public class DataModule {
 
     @Provides
     @Singleton
-    CharactersRepository provideCharactersRepository(CharactersCloudDataSource cloudDataSource,
+    CharactersRepository provideCharactersRepository(CharactersRemoteDataSource remoteDataSource,
                                                      CharactersLocalDataSource localDataSource,
                                                      CharacterResponseMapper wrapperResponseMapper,
                                                      CharacterEntityMapper characterEntityMapper) {
-        return new CharactersRepositoryImpl(cloudDataSource,
+        return new CharactersRepositoryImpl(remoteDataSource,
                 localDataSource,
                 wrapperResponseMapper,
                 characterEntityMapper);

@@ -1,4 +1,4 @@
-package com.github.plplmax.mrv.data.cloud;
+package com.github.plplmax.mrv.data.remote;
 
 import com.github.plplmax.mrv.data.models.network.CharacterDataWrapperResponse;
 

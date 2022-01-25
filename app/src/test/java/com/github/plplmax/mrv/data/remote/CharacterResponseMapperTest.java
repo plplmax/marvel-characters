@@ -1,4 +1,4 @@
-package com.github.plplmax.mrv.data.cloud;
+package com.github.plplmax.mrv.data.remote;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

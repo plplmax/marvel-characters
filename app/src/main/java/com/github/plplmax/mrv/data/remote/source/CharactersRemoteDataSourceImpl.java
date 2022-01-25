@@ -1,16 +1,16 @@
-package com.github.plplmax.mrv.data.cloud.source;
+package com.github.plplmax.mrv.data.remote.source;
 
-import com.github.plplmax.mrv.data.cloud.CharactersService;
 import com.github.plplmax.mrv.data.models.network.CharacterDataWrapperResponse;
+import com.github.plplmax.mrv.data.remote.CharactersService;
 
 import java.io.IOException;
 
 import retrofit2.Response;
 
-public class CharactersCloudDataSourceImpl implements CharactersCloudDataSource {
+public class CharactersRemoteDataSourceImpl implements CharactersRemoteDataSource {
     private final CharactersService service;
 
-    public CharactersCloudDataSourceImpl(CharactersService service) {
+    public CharactersRemoteDataSourceImpl(CharactersService service) {
         this.service = service;
     }
 
