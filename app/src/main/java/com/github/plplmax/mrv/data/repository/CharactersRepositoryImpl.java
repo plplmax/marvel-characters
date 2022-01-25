@@ -2,7 +2,7 @@ package com.github.plplmax.mrv.data.repository;
 
 import com.github.plplmax.mrv.data.local.CharacterEntity;
 import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
-import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSource;
+import com.github.plplmax.mrv.data.local.CharactersLocalDataSource;
 import com.github.plplmax.mrv.data.remote.responses.CharacterDataWrapperResponse;
 import com.github.plplmax.mrv.data.remote.CharacterResponseMapper;
 import com.github.plplmax.mrv.data.remote.CharactersRemoteDataSource;

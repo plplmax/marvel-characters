@@ -1,7 +1,4 @@
-package com.github.plplmax.mrv.data.local.source;
-
-import com.github.plplmax.mrv.data.local.CharacterDao;
-import com.github.plplmax.mrv.data.local.CharacterEntity;
+package com.github.plplmax.mrv.data.local;
 
 import java.util.List;
 

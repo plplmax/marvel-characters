@@ -9,7 +9,7 @@ import com.github.plplmax.mrv.R;
 import com.github.plplmax.mrv.data.local.AppDatabase;
 import com.github.plplmax.mrv.data.local.CharacterDao;
 import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
-import com.github.plplmax.mrv.data.local.source.CharactersLocalDataSource;
+import com.github.plplmax.mrv.data.local.CharactersLocalDataSource;
 import com.github.plplmax.mrv.data.remote.CharacterResponseMapper;
 import com.github.plplmax.mrv.data.remote.CharactersRemoteDataSource;
 import com.github.plplmax.mrv.data.remote.CharactersService;
