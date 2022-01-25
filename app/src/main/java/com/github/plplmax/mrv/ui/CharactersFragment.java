@@ -27,14 +27,14 @@ import javax.inject.Inject;
 
 public class CharactersFragment extends Fragment {
     @Inject
-    MainViewModelFactory factory;
+    CharactersViewModelFactory factory;
 
     @Inject
     Context applicationContext;
 
     private static final String PREVIOUS_ITEM_COUNT_KEY = "previous_item_count_key";
 
-    private MainViewModel viewModel;
+    private CharactersViewModel viewModel;
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
@@ -70,7 +70,7 @@ public class CharactersFragment extends Fragment {
         ((Application) requireActivity().getApplicationContext()).appComponent
                 .inject(this);
 
-        viewModel = new ViewModelProvider(requireActivity(), factory).get(MainViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity(), factory).get(CharactersViewModel.class);
 
         if (viewModel.areCharactersEmpty()
                 && savedInstanceState != null

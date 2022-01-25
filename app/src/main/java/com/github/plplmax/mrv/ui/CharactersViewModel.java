@@ -1,5 +1,7 @@
 package com.github.plplmax.mrv.ui;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -15,7 +17,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class MainViewModel extends ViewModel {
+public class CharactersViewModel extends ViewModel {
     private final ExecutorService service = Executors.newSingleThreadExecutor();
 
     private final FetchCharactersWithOffsetInteractor fetchCharactersWithOffset;
@@ -33,8 +35,8 @@ public class MainViewModel extends ViewModel {
     public String failMessage;
 
 
-    public MainViewModel(FetchCharactersWithOffsetInteractor fetchCharactersWithOffset,
-                         FetchCharactersWithLimitInteractor fetchCharactersWithLimit) {
+    public CharactersViewModel(FetchCharactersWithOffsetInteractor fetchCharactersWithOffset,
+                               FetchCharactersWithLimitInteractor fetchCharactersWithLimit) {
         this.fetchCharactersWithOffset = fetchCharactersWithOffset;
         this.fetchCharactersWithLimit = fetchCharactersWithLimit;
     }
@@ -112,5 +114,7 @@ public class MainViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
         service.shutdownNow();
+        Log.e("TEST", "onCleared: service is shutdown - " + service.isTerminated() );
+        Log.d("TEST", "onCleared()");
     }
 }
