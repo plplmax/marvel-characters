@@ -1,15 +1,17 @@
 package com.github.plplmax.mrv.data.remote;
 
+import androidx.annotation.NonNull;
+
 import com.github.plplmax.mrv.data.remote.responses.CharacterDataWrapperResponse;
+import com.github.plplmax.mrv.domain.models.FetchCharactersParams;
 
 import java.io.IOException;
 
 import retrofit2.Response;
 
 public interface CharactersRemoteDataSource {
-    Response<CharacterDataWrapperResponse> fetchCharactersWithOffset(int offset) throws IOException;
-
-    Response<CharacterDataWrapperResponse> fetchCharactersWithLimit(int limit) throws IOException;
+    Response<CharacterDataWrapperResponse> fetchCharacters(FetchCharactersParams params)
+            throws IOException;
 
     class Base implements CharactersRemoteDataSource {
         private final CharactersService service;
@@ -19,15 +21,10 @@ public interface CharactersRemoteDataSource {
         }
 
         @Override
-        public Response<CharacterDataWrapperResponse> fetchCharactersWithOffset(int offset)
-                throws IOException {
-            return service.fetchCharactersWithOffset(offset).execute();
-        }
-
-        @Override
-        public Response<CharacterDataWrapperResponse> fetchCharactersWithLimit(int limit)
-                throws IOException {
-            return service.fetchCharactersWithLimit(limit).execute();
+        public Response<CharacterDataWrapperResponse> fetchCharacters(
+                @NonNull FetchCharactersParams params
+        ) throws IOException {
+            return service.fetchCharacters(params.getOffset(), params.getLimit()).execute();
         }
     }
 }

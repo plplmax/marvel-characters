@@ -3,10 +3,11 @@ package com.github.plplmax.mrv.data.repository;
 import com.github.plplmax.mrv.data.local.CharacterEntity;
 import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
 import com.github.plplmax.mrv.data.local.CharactersLocalDataSource;
-import com.github.plplmax.mrv.data.remote.responses.CharacterDataWrapperResponse;
 import com.github.plplmax.mrv.data.remote.CharacterResponseMapper;
 import com.github.plplmax.mrv.data.remote.CharactersRemoteDataSource;
+import com.github.plplmax.mrv.data.remote.responses.CharacterDataWrapperResponse;
 import com.github.plplmax.mrv.domain.models.Character;
+import com.github.plplmax.mrv.domain.models.FetchCharactersParams;
 import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;
 
@@ -32,11 +33,13 @@ public class CharactersRepositoryImpl implements CharactersRepository {
     }
 
     @Override
-    public FetchCharactersResult fetchCharactersWithOffset(int offset) {
+    public FetchCharactersResult fetchCharacters(FetchCharactersParams params) {
         try {
-            List<CharacterEntity> localResponse = localDataSource.fetchCharactersWithOffset(offset);
+            List<CharacterEntity> localResponse = localDataSource.fetchCharacters(params);
+
             if (localResponse.isEmpty()) {
-                Response<CharacterDataWrapperResponse> response = remoteDataSource.fetchCharactersWithOffset(offset);
+                Response<CharacterDataWrapperResponse> response = remoteDataSource.fetchCharacters(params);
+
                 if (response.isSuccessful()) {
                     if (response.body() != null) {
                         List<Character> characters = responseMapper.mapFromResponse(response.body());
@@ -53,22 +56,6 @@ public class CharactersRepositoryImpl implements CharactersRepository {
                 List<Character> characters = characterEntityMapper.mapFromEntity(localResponse);
                 return new FetchCharactersResult.Success(characters);
             }
-        } catch (Exception e) {
-            return new FetchCharactersResult.Fail(e);
-        }
-    }
-
-    @Override
-    public FetchCharactersResult fetchCharactersWithLimit(int limit) {
-        try {
-            List<CharacterEntity> localResponse = localDataSource.fetchCharactersWithLimit(limit);
-
-            if (localResponse.isEmpty())
-                return new FetchCharactersResult.Success(new ArrayList<>());
-
-            List<Character> characters = characterEntityMapper.mapFromEntity(localResponse);
-
-            return new FetchCharactersResult.Success(characters);
         } catch (Exception e) {
             return new FetchCharactersResult.Fail(e);
         }

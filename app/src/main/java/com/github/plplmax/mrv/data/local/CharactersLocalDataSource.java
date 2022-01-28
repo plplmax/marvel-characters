@@ -1,11 +1,13 @@
 package com.github.plplmax.mrv.data.local;
 
+import androidx.annotation.NonNull;
+
+import com.github.plplmax.mrv.domain.models.FetchCharactersParams;
+
 import java.util.List;
 
 public interface CharactersLocalDataSource {
-    List<CharacterEntity> fetchCharactersWithOffset(int offset);
-
-    List<CharacterEntity> fetchCharactersWithLimit(int limit);
+    List<CharacterEntity> fetchCharacters(FetchCharactersParams params);
 
     void saveCharacters(List<CharacterEntity> characters);
 
@@ -17,13 +19,8 @@ public interface CharactersLocalDataSource {
         }
 
         @Override
-        public List<CharacterEntity> fetchCharactersWithOffset(int offset) {
-            return dao.fetchCharactersWithOffset(offset);
-        }
-
-        @Override
-        public List<CharacterEntity> fetchCharactersWithLimit(int limit) {
-            return dao.fetchCharactersWithLimit(limit);
+        public List<CharacterEntity> fetchCharacters(@NonNull FetchCharactersParams params) {
+            return dao.fetchCharacters(params.getOffset(), params.getLimit());
         }
 
         @Override
