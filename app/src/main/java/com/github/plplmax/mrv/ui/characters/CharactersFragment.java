@@ -76,9 +76,7 @@ public class CharactersFragment extends Fragment {
 
         viewModel = new ViewModelProvider(requireActivity(), factory).get(CharactersViewModel.class);
 
-        if (viewModel.areCharactersEmpty()
-                && savedInstanceState != null
-                && savedInstanceState.containsKey(PREVIOUS_ITEM_COUNT_KEY)) {
+        if (savedInstanceState != null) {
             Log.e("TEST", "key is exist");
             int previousItemCount = savedInstanceState.getInt(PREVIOUS_ITEM_COUNT_KEY);
             viewModel.lastCharactersLoadedCount = previousItemCount;
