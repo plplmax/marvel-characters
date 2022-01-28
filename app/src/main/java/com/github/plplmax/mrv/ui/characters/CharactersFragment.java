@@ -82,6 +82,8 @@ public class CharactersFragment extends Fragment {
             viewModel.lastCharactersLoadedCount = previousItemCount;
             Log.e("TEST", "onViewCreated: findLastVisible = " + previousItemCount);
         }
+
+        viewModel.restoreCharacters();
     }
 
     @Override
@@ -95,12 +97,6 @@ public class CharactersFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        if (viewModel.areCharactersEmpty()) {
-            if (viewModel.lastCharactersLoadedCount != 0)
-                viewModel.fetchCharactersWithLimit(viewModel.lastCharactersLoadedCount);
-            else viewModel.fetchCharactersWithOffset(0);
-        }
 
         setupViews(view);
         setupRecyclerView();

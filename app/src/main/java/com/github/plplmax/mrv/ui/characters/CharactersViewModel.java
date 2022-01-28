@@ -88,6 +88,13 @@ public class CharactersViewModel extends ViewModel {
         });
     }
 
+    public void restoreCharacters() {
+        if (!areCharactersEmpty()) return;
+
+        if (lastCharactersLoadedCount == 0) fetchCharactersWithOffset(lastCharactersLoadedCount);
+        else fetchCharactersWithLimit(lastCharactersLoadedCount);
+    }
+
     public boolean isOnScrolledActive() {
         return onScrolledActive && !areAllCharactersLoaded;
     }
