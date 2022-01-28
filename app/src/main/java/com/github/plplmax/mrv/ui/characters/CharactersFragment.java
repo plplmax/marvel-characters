@@ -129,13 +129,8 @@ public class CharactersFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        if (viewModel.areCharactersEmpty()) {
-            Log.e("TEST", "onSaveInstanceState invoked in body with " + viewModel.lastCharactersLoadedCount);
-            outState.putInt(PREVIOUS_ITEM_COUNT_KEY, viewModel.lastCharactersLoadedCount);
-        } else {
-            Log.e("TEST", "onSaveInstanceState invoked in body with " + viewModel.fetchCharactersCount());
-            outState.putInt(PREVIOUS_ITEM_COUNT_KEY, viewModel.fetchCharactersCount());
-        }
+        Log.e("TEST", "onSaveInstanceState invoked in body with " + viewModel.lastCharactersLoadedCount);
+        outState.putInt(PREVIOUS_ITEM_COUNT_KEY, viewModel.lastCharactersLoadedCount);
 
         super.onSaveInstanceState(outState);
     }

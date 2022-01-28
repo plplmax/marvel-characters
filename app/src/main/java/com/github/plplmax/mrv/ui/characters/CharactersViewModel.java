@@ -50,6 +50,7 @@ public class CharactersViewModel extends ViewModel {
             if (result instanceof FetchCharactersResult.Success) {
                 final List<Character> characters = ((FetchCharactersResult.Success) result).getData();
                 this.characters.addAll(characters);
+                updateLastCharactersLoadedCount();
 
                 if (characters.isEmpty()) {
                     areAllCharactersLoaded = true;
@@ -72,6 +73,7 @@ public class CharactersViewModel extends ViewModel {
             if (result instanceof FetchCharactersResult.Success) {
                 final List<Character> characters = ((FetchCharactersResult.Success) result).getData();
                 this.characters.addAll(characters);
+                updateLastCharactersLoadedCount();
 
                 if (characters.isEmpty()) {
                     fetchCharactersWithOffset(0);
@@ -108,6 +110,10 @@ public class CharactersViewModel extends ViewModel {
 
     public int fetchCharactersCount() {
         return characters.size();
+    }
+
+    private void updateLastCharactersLoadedCount() {
+        lastCharactersLoadedCount = fetchCharactersCount();
     }
 
     @Override
