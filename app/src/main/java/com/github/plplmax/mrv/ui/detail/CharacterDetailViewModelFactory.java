@@ -13,6 +13,7 @@ public class CharacterDetailViewModelFactory implements ViewModelProvider.Factor
         this.character = character;
     }
 
+    @SuppressWarnings("unchecked")
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
