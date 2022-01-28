@@ -1,8 +1,7 @@
 package com.github.plplmax.mrv.di;
 
 import com.github.plplmax.mrv.domain.core.Md5Provider;
-import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithLimitInteractor;
-import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithOffsetInteractor;
+import com.github.plplmax.mrv.domain.interactors.FetchCharactersInteractor;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;
 
 import javax.inject.Singleton;
@@ -13,13 +12,8 @@ import dagger.Provides;
 @Module
 public class DomainModule {
     @Provides
-    FetchCharactersWithOffsetInteractor provideFetchCharactersWithOffsetInteractor(CharactersRepository repository) {
-        return new FetchCharactersWithOffsetInteractor(repository);
-    }
-
-    @Provides
-    FetchCharactersWithLimitInteractor provideFetchCharactersWithLimitInteractor(CharactersRepository repository) {
-        return new FetchCharactersWithLimitInteractor(repository);
+    FetchCharactersInteractor provideFetchCharactersInteractor(CharactersRepository repository) {
+        return new FetchCharactersInteractor(repository);
     }
 
     @Provides

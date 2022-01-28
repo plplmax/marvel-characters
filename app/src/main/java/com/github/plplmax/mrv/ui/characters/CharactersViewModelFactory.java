@@ -4,23 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithLimitInteractor;
-import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithOffsetInteractor;
+import com.github.plplmax.mrv.domain.interactors.FetchCharactersInteractor;
 
 public class CharactersViewModelFactory implements ViewModelProvider.Factory {
-    private final FetchCharactersWithOffsetInteractor fetchCharactersWithOffset;
-    private final FetchCharactersWithLimitInteractor fetchCharactersWithLimit;
+    private final FetchCharactersInteractor interactor;
 
-    public CharactersViewModelFactory(FetchCharactersWithOffsetInteractor fetchCharactersWithOffset,
-                                      FetchCharactersWithLimitInteractor fetchCharactersWithLimit) {
-        this.fetchCharactersWithOffset = fetchCharactersWithOffset;
-        this.fetchCharactersWithLimit = fetchCharactersWithLimit;
+    public CharactersViewModelFactory(FetchCharactersInteractor interactor) {
+        this.interactor = interactor;
     }
 
     @SuppressWarnings("unchecked")
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new CharactersViewModel(fetchCharactersWithOffset, fetchCharactersWithLimit);
+        return (T) new CharactersViewModel(interactor);
     }
 }

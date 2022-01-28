@@ -6,9 +6,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithLimitInteractor;
-import com.github.plplmax.mrv.domain.interactors.FetchCharactersWithOffsetInteractor;
+import com.github.plplmax.mrv.domain.interactors.FetchCharactersInteractor;
 import com.github.plplmax.mrv.domain.models.Character;
+import com.github.plplmax.mrv.domain.models.FetchCharactersParams;
 import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
 import com.github.plplmax.mrv.ui.core.State;
 
@@ -18,10 +18,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class CharactersViewModel extends ViewModel {
+    private static final int DEFAULT_CHARACTERS_OFFSET = 0;
+    private static final int DEFAULT_CHARACTERS_LIMIT = 20;
+
     private final ExecutorService service = Executors.newSingleThreadExecutor();
 
-    private final FetchCharactersWithOffsetInteractor fetchCharactersWithOffset;
-    private final FetchCharactersWithLimitInteractor fetchCharactersWithLimit;
+    private final FetchCharactersInteractor interactor;
 
     private boolean onScrolledActive = true;
     private boolean areAllCharactersLoaded = false;
@@ -34,18 +36,16 @@ public class CharactersViewModel extends ViewModel {
     public int lastCharactersLoadedCount = 0;
     public String failMessage;
 
-
-    public CharactersViewModel(FetchCharactersWithOffsetInteractor fetchCharactersWithOffset,
-                               FetchCharactersWithLimitInteractor fetchCharactersWithLimit) {
-        this.fetchCharactersWithOffset = fetchCharactersWithOffset;
-        this.fetchCharactersWithLimit = fetchCharactersWithLimit;
+    public CharactersViewModel(FetchCharactersInteractor interactor) {
+        this.interactor = interactor;
     }
 
     public void fetchCharactersWithOffset(int offset) {
         _state.setValue(State.LOADING);
 
         service.execute(() -> {
-            FetchCharactersResult result = fetchCharactersWithOffset.Execute(offset);
+            FetchCharactersParams params = new FetchCharactersParams(offset, DEFAULT_CHARACTERS_LIMIT);
+            FetchCharactersResult result = interactor.Execute(params);
 
             if (result instanceof FetchCharactersResult.Success) {
                 final List<Character> characters = ((FetchCharactersResult.Success) result).getData();
@@ -68,7 +68,8 @@ public class CharactersViewModel extends ViewModel {
         _state.setValue(State.LOADING);
 
         service.execute(() -> {
-            FetchCharactersResult result = fetchCharactersWithLimit.Execute(limit);
+            FetchCharactersParams params = new FetchCharactersParams(DEFAULT_CHARACTERS_OFFSET, limit);
+            FetchCharactersResult result = interactor.Execute(params);
 
             if (result instanceof FetchCharactersResult.Success) {
                 final List<Character> characters = ((FetchCharactersResult.Success) result).getData();
