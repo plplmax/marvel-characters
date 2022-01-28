@@ -74,10 +74,8 @@ public class CharactersFragment extends Fragment {
 
         viewModel = new ViewModelProvider(requireActivity(), factory).get(CharactersViewModel.class);
 
-        if (savedInstanceState != null) {
-            int previousItemCount = savedInstanceState.getInt(PREVIOUS_ITEM_COUNT_KEY);
-            viewModel.lastCharactersLoadedCount = previousItemCount;
-        }
+        if (savedInstanceState != null)
+            viewModel.lastCharactersLoadedCount = savedInstanceState.getInt(PREVIOUS_ITEM_COUNT_KEY);
 
         viewModel.restoreCharacters();
     }
