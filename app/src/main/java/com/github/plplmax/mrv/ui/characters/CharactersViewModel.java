@@ -89,7 +89,7 @@ public class CharactersViewModel extends ViewModel {
     }
 
     public boolean isOnScrolledActive() {
-        return onScrolledActive;
+        return onScrolledActive && !areAllCharactersLoaded;
     }
 
     public void activateOnScrolled() {
@@ -98,10 +98,6 @@ public class CharactersViewModel extends ViewModel {
 
     public void deactivateOnScrolled() {
         onScrolledActive = false;
-    }
-
-    public boolean areAllCharactersLoaded() {
-        return areAllCharactersLoaded;
     }
 
     public boolean areCharactersEmpty() {

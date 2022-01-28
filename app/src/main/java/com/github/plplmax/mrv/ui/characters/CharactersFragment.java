@@ -170,9 +170,7 @@ public class CharactersFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 Log.e("TEST", "onScrolledInvoked: ");
-                if (viewModel.isOnScrolledActive() &&
-                        !viewModel.areAllCharactersLoaded() &&
-                        gridLayoutManager.findLastVisibleItemPosition() >= adapter.getItemCount() - 10) {
+                if (viewModel.isOnScrolledActive() && needPreloadCharacters()) {
                     viewModel.deactivateOnScrolled();
                     handler.post(() -> viewModel.fetchCharactersWithOffset(adapter.getItemCount()));
                     Log.d("TEST", "onScrolled invoked()");
@@ -180,6 +178,10 @@ public class CharactersFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private boolean needPreloadCharacters() {
+        return gridLayoutManager.findLastVisibleItemPosition() >= adapter.getItemCount() - 10;
     }
 
     private void initState() {
