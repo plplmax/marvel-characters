@@ -1,7 +1,5 @@
 package com.github.plplmax.mrv.ui.characters;
 
-import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -101,7 +99,5 @@ public class CharactersViewModel extends ViewModel {
     protected void onCleared() {
         super.onCleared();
         service.shutdownNow();
-        Log.e("TEST", "onCleared: service is shutdown - " + service.isTerminated() );
-        Log.d("TEST", "onCleared()");
     }
 }

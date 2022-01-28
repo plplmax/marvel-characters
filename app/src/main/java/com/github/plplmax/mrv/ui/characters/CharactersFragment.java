@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,18 +69,14 @@ public class CharactersFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.e("TEST", "onCreate: ");
-
         ((Application) requireActivity().getApplicationContext()).appComponent
                 .inject(this);
 
         viewModel = new ViewModelProvider(requireActivity(), factory).get(CharactersViewModel.class);
 
         if (savedInstanceState != null) {
-            Log.e("TEST", "key is exist");
             int previousItemCount = savedInstanceState.getInt(PREVIOUS_ITEM_COUNT_KEY);
             viewModel.lastCharactersLoadedCount = previousItemCount;
-            Log.e("TEST", "onViewCreated: findLastVisible = " + previousItemCount);
         }
 
         viewModel.restoreCharacters();
@@ -91,7 +86,6 @@ public class CharactersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.e("TEST", "onCreateView invoked");
         return inflater.inflate(R.layout.fragment_characters, container, false);
     }
 
@@ -107,7 +101,6 @@ public class CharactersFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        Log.e("TEST", "onDestroyView: ");
         recyclerView = null;
         progressBar = null;
         adapter = null;
@@ -118,7 +111,6 @@ public class CharactersFragment extends Fragment {
 
     @Override
     public void onDestroy() {
-        Log.e("TEST", "onDestroy invoked");
         characterClickListener = null;
 
         super.onDestroy();
@@ -126,9 +118,7 @@ public class CharactersFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        Log.e("TEST", "onSaveInstanceState invoked in body with " + viewModel.lastCharactersLoadedCount);
         outState.putInt(PREVIOUS_ITEM_COUNT_KEY, viewModel.lastCharactersLoadedCount);
-
         super.onSaveInstanceState(outState);
     }
 
@@ -166,7 +156,6 @@ public class CharactersFragment extends Fragment {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                Log.e("TEST", "onScrolledInvoked: ");
                 if (viewModel.isOnScrolledActive() && needPreloadCharacters()) {
                     viewModel.deactivateOnScrolled();
                     handler.post(() -> {
@@ -175,8 +164,6 @@ public class CharactersFragment extends Fragment {
                                 CharactersViewModel.DEFAULT_CHARACTERS_LIMIT);
                         viewModel.fetchCharacters(params);
                     });
-                    Log.d("TEST", "onScrolled invoked()");
-                    Log.d("TEST", "findLastVisibleItemPosition: " + gridLayoutManager.findLastVisibleItemPosition() + " >= getItemCount - 10: " + (adapter.getItemCount() - 10) + "");
                 }
             }
         });
@@ -206,9 +193,8 @@ public class CharactersFragment extends Fragment {
     }
 
     private void showMessage(String message) {
-//        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show();
         Snackbar.make(requireContext(), progressBar, message, BaseTransientBottomBar.LENGTH_INDEFINITE)
-        .setAction("Retry", v -> viewModel.activateOnScrolled())
-        .show();
+                .setAction("Retry", v -> viewModel.activateOnScrolled())
+                .show();
     }
 }
