@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy;
 import com.github.plplmax.mrv.Application;
 import com.github.plplmax.mrv.R;
 import com.github.plplmax.mrv.domain.models.Character;
+import com.github.plplmax.mrv.domain.models.FetchCharactersParams;
 import com.github.plplmax.mrv.ui.core.State;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
@@ -168,7 +169,12 @@ public class CharactersFragment extends Fragment {
                 Log.e("TEST", "onScrolledInvoked: ");
                 if (viewModel.isOnScrolledActive() && needPreloadCharacters()) {
                     viewModel.deactivateOnScrolled();
-                    handler.post(() -> viewModel.fetchCharactersWithOffset(adapter.getItemCount()));
+                    handler.post(() -> {
+                        FetchCharactersParams params = new FetchCharactersParams(
+                                adapter.getItemCount(),
+                                CharactersViewModel.DEFAULT_CHARACTERS_LIMIT);
+                        viewModel.fetchCharacters(params);
+                    });
                     Log.d("TEST", "onScrolled invoked()");
                     Log.d("TEST", "findLastVisibleItemPosition: " + gridLayoutManager.findLastVisibleItemPosition() + " >= getItemCount - 10: " + (adapter.getItemCount() - 10) + "");
                 }
