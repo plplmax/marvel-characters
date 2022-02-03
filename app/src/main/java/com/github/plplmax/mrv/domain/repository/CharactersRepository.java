@@ -2,12 +2,13 @@ package com.github.plplmax.mrv.domain.repository;
 
 import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.models.FetchCharactersParams;
-import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 public interface CharactersRepository {
-    FetchCharactersResult fetchCharacters(FetchCharactersParams params);
+    Single<List<Character>> fetchCharacters(FetchCharactersParams params);
 
     void saveCharacters(List<Character> characters);
 }

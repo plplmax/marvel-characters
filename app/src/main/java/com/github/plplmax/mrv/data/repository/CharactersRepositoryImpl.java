@@ -5,16 +5,13 @@ import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
 import com.github.plplmax.mrv.data.local.CharactersLocalDataSource;
 import com.github.plplmax.mrv.data.remote.CharacterResponseMapper;
 import com.github.plplmax.mrv.data.remote.CharactersRemoteDataSource;
-import com.github.plplmax.mrv.data.remote.responses.CharacterDataWrapperResponse;
 import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.models.FetchCharactersParams;
-import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Response;
+import io.reactivex.rxjava3.core.Single;
 
 public class CharactersRepositoryImpl implements CharactersRepository {
     private final CharactersRemoteDataSource remoteDataSource;
@@ -33,32 +30,16 @@ public class CharactersRepositoryImpl implements CharactersRepository {
     }
 
     @Override
-    public FetchCharactersResult fetchCharacters(FetchCharactersParams params) {
-        try {
-            List<CharacterEntity> localResponse = localDataSource.fetchCharacters(params);
-
-            if (localResponse.isEmpty()) {
-                Response<CharacterDataWrapperResponse> response = remoteDataSource.fetchCharacters(params);
-
-                if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        List<Character> characters = responseMapper.mapFromResponse(response.body());
-                        saveCharacters(characters);
-                        return new FetchCharactersResult.Success(characters);
-                    }
-
-                    return new FetchCharactersResult.Success(new ArrayList<>());
-                }
-
-                String errorMessage = response.errorBody() != null ? response.errorBody().string() : "";
-                return new FetchCharactersResult.Fail(new Exception(errorMessage));
-            } else {
-                List<Character> characters = characterEntityMapper.mapFromEntity(localResponse);
-                return new FetchCharactersResult.Success(characters);
-            }
-        } catch (Exception e) {
-            return new FetchCharactersResult.Fail(e);
-        }
+    public Single<List<Character>> fetchCharacters(FetchCharactersParams params) {
+        return localDataSource.fetchCharacters(params)
+                .flatMap(characterEntities -> {
+                    if (characterEntities.isEmpty())
+                        return remoteDataSource.fetchCharacters(params)
+                                .map(responseMapper::mapFromResponse)
+                                .doOnSuccess(this::saveCharacters);
+                    else return Single.just(characterEntities)
+                            .map(characterEntityMapper::mapFromEntity);
+                });
     }
 
     @Override
