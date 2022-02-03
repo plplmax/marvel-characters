@@ -6,8 +6,10 @@ import com.github.plplmax.mrv.domain.models.FetchCharactersParams;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 public interface CharactersLocalDataSource {
-    List<CharacterEntity> fetchCharacters(FetchCharactersParams params);
+    Single<List<CharacterEntity>> fetchCharacters(FetchCharactersParams params);
 
     void saveCharacters(List<CharacterEntity> characters);
 
@@ -19,7 +21,7 @@ public interface CharactersLocalDataSource {
         }
 
         @Override
-        public List<CharacterEntity> fetchCharacters(@NonNull FetchCharactersParams params) {
+        public Single<List<CharacterEntity>> fetchCharacters(@NonNull FetchCharactersParams params) {
             return dao.fetchCharacters(params.getOffset(), params.getLimit());
         }
 
