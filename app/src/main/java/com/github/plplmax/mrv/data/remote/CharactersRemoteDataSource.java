@@ -5,13 +5,10 @@ import androidx.annotation.NonNull;
 import com.github.plplmax.mrv.data.remote.responses.CharacterDataWrapperResponse;
 import com.github.plplmax.mrv.domain.models.FetchCharactersParams;
 
-import java.io.IOException;
-
-import retrofit2.Response;
+import io.reactivex.rxjava3.core.Single;
 
 public interface CharactersRemoteDataSource {
-    Response<CharacterDataWrapperResponse> fetchCharacters(FetchCharactersParams params)
-            throws IOException;
+    Single<CharacterDataWrapperResponse> fetchCharacters(FetchCharactersParams params);
 
     class Base implements CharactersRemoteDataSource {
         private final CharactersService service;
@@ -21,10 +18,10 @@ public interface CharactersRemoteDataSource {
         }
 
         @Override
-        public Response<CharacterDataWrapperResponse> fetchCharacters(
+        public Single<CharacterDataWrapperResponse> fetchCharacters(
                 @NonNull FetchCharactersParams params
-        ) throws IOException {
-            return service.fetchCharacters(params.getOffset(), params.getLimit()).execute();
+        ) {
+            return service.fetchCharacters(params.getOffset(), params.getLimit());
         }
     }
 }
