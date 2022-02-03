@@ -7,21 +7,22 @@ import androidx.lifecycle.ViewModel;
 import com.github.plplmax.mrv.domain.interactors.FetchCharactersInteractor;
 import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.models.FetchCharactersParams;
-import com.github.plplmax.mrv.domain.models.FetchCharactersResult;
 import com.github.plplmax.mrv.ui.core.State;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class CharactersViewModel extends ViewModel {
     private static final int DEFAULT_CHARACTERS_OFFSET = 0;
     protected static final int DEFAULT_CHARACTERS_LIMIT = 20;
 
-    private final ExecutorService service = Executors.newSingleThreadExecutor();
 
     private final FetchCharactersInteractor interactor;
+
+    private Disposable disposable;
 
     private boolean onScrolledActive = true;
     private boolean areAllCharactersLoaded = false;
@@ -29,7 +30,7 @@ public class CharactersViewModel extends ViewModel {
     private final MutableLiveData<State> _state = new MutableLiveData<>();
     public final LiveData<State> state = _state;
 
-    public final List<Character> characters = new ArrayList<>();
+    public List<Character> characters = new ArrayList<>();
 
     public int lastCharactersLoadedCount = 0;
     public String failMessage;
@@ -41,24 +42,19 @@ public class CharactersViewModel extends ViewModel {
     public void fetchCharacters(FetchCharactersParams params) {
         _state.setValue(State.LOADING);
 
-        service.execute(() -> {
-            FetchCharactersResult result = interactor.Execute(params);
+        disposable = interactor.Execute(params)
+                .subscribeOn(Schedulers.io())
+                .subscribe(newCharacters -> {
+                            characters.addAll(newCharacters);
+                            updateLastCharactersLoadedCount();
 
-            if (result instanceof FetchCharactersResult.Success) {
-                final List<Character> characters = ((FetchCharactersResult.Success) result).getData();
-                this.characters.addAll(characters);
-                updateLastCharactersLoadedCount();
-
-                if (characters.isEmpty()) {
-                    areAllCharactersLoaded = true;
-                }
-
-                _state.postValue(State.DONE);
-            } else if (result instanceof FetchCharactersResult.Fail) {
-                failMessage = ((FetchCharactersResult.Fail) result).getException().getMessage();
-                _state.postValue(State.ERROR);
-            }
-        });
+                            if (newCharacters.isEmpty()) areAllCharactersLoaded = true;
+                            _state.postValue(State.DONE);
+                        },
+                        error -> {
+                            failMessage = error.getMessage();
+                            _state.postValue(State.ERROR);
+                        });
     }
 
     public void restoreCharacters() {
@@ -97,7 +93,9 @@ public class CharactersViewModel extends ViewModel {
 
     @Override
     protected void onCleared() {
+        if (disposable != null) disposable.dispose();
+        disposable = null;
+
         super.onCleared();
-        service.shutdownNow();
     }
 }
