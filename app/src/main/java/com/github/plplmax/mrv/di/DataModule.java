@@ -60,7 +60,6 @@ public class DataModule {
         return new OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .readTimeout(TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
-                .connectTimeout(TIMEOUT_IN_SECONDS, TimeUnit.SECONDS)
                 .build();
     }
 
