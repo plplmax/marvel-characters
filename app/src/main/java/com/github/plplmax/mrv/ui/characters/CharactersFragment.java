@@ -129,7 +129,7 @@ public class CharactersFragment extends Fragment {
     }
 
     private void setupLayoutManager() {
-        gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        gridLayoutManager = new GridLayoutManager(requireContext(), 2);
         gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
             public int getSpanSize(int position) {
