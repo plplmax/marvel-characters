@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.room.Room;
 
 import com.github.plplmax.mrv.R;
+import com.github.plplmax.mrv.data.core.ErrorToDomainMapper;
 import com.github.plplmax.mrv.data.local.AppDatabase;
 import com.github.plplmax.mrv.data.local.CharacterDao;
 import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
@@ -14,6 +15,8 @@ import com.github.plplmax.mrv.data.remote.CharacterResponseMapper;
 import com.github.plplmax.mrv.data.remote.CharactersRemoteDataSource;
 import com.github.plplmax.mrv.data.remote.CharactersService;
 import com.github.plplmax.mrv.data.repository.CharactersRepositoryImpl;
+import com.github.plplmax.mrv.domain.core.AppError;
+import com.github.plplmax.mrv.domain.core.Mapper;
 import com.github.plplmax.mrv.domain.core.Md5Provider;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;
 import com.github.plplmax.mrv.ui.core.ResourceProvider;
@@ -131,5 +134,11 @@ public class DataModule {
     @Singleton
     CharacterEntityMapper provideCharacterDataMapper() {
         return new CharacterEntityMapper();
+    }
+
+    @Provides
+    @Singleton
+    Mapper<Throwable, AppError> provideErrorToDomainMapper() {
+        return new ErrorToDomainMapper();
     }
 }
