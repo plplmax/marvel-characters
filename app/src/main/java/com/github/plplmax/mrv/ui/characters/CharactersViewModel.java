@@ -22,22 +22,19 @@ public class CharactersViewModel extends ViewModel {
     private static final int DEFAULT_CHARACTERS_OFFSET = 0;
     protected static final int DEFAULT_CHARACTERS_LIMIT = 20;
 
-
     private final FetchCharactersInteractor interactor;
     private final Mapper<ErrorType, String> errorMapper;
-
-    private Disposable disposable;
-
-    private boolean onScrolledActive = true;
-    private boolean areAllCharactersLoaded = false;
 
     private final MutableLiveData<State> _state = new MutableLiveData<>();
     public final LiveData<State> state = _state;
 
-    public List<Character> characters = new ArrayList<>();
+    private Disposable disposable;
+    private boolean onScrolledActive = true;
+    private boolean areAllCharactersLoaded = false;
 
-    public int lastCharactersLoadedCount = 0;
+    public List<Character> characters = new ArrayList<>();
     public String failMessage;
+    public int lastCharactersLoadedCount = 0;
 
     public CharactersViewModel(
             FetchCharactersInteractor interactor,
