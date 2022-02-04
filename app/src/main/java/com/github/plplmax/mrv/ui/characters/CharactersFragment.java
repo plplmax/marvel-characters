@@ -31,9 +31,6 @@ public class CharactersFragment extends Fragment {
     @Inject
     CharactersViewModelFactory factory;
 
-    @Inject
-    Context applicationContext;
-
     private static final String PREVIOUS_ITEM_COUNT_KEY = "previous_item_count_key";
 
     private CharactersViewModel viewModel;
@@ -143,8 +140,7 @@ public class CharactersFragment extends Fragment {
     }
 
     private void setupAdapter() {
-        adapter = new CharactersAdapter(requireContext(),
-                character -> characterClickListener.onCharacterClick(character));
+        adapter = new CharactersAdapter(requireContext(), characterClickListener);
         adapter.setStateRestorationPolicy(StateRestorationPolicy.PREVENT_WHEN_EMPTY);
         recyclerView.setAdapter(adapter);
     }
@@ -193,7 +189,7 @@ public class CharactersFragment extends Fragment {
     }
 
     private void showMessage(String message) {
-        Snackbar.make(requireContext(), progressBar, message, BaseTransientBottomBar.LENGTH_INDEFINITE)
+        Snackbar.make(progressBar, message, BaseTransientBottomBar.LENGTH_INDEFINITE)
                 .setAction("Retry", v -> fetchCharacters())
                 .show();
     }
