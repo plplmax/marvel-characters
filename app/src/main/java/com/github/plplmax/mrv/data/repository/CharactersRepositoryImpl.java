@@ -5,6 +5,8 @@ import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
 import com.github.plplmax.mrv.data.local.CharactersLocalDataSource;
 import com.github.plplmax.mrv.data.remote.CharacterResponseMapper;
 import com.github.plplmax.mrv.data.remote.CharactersRemoteDataSource;
+import com.github.plplmax.mrv.domain.core.AppError;
+import com.github.plplmax.mrv.domain.core.Mapper;
 import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.models.FetchCharactersParams;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;
@@ -18,15 +20,18 @@ public class CharactersRepositoryImpl implements CharactersRepository {
     private final CharactersLocalDataSource localDataSource;
     private final CharacterResponseMapper responseMapper;
     private final CharacterEntityMapper characterEntityMapper;
+    private final Mapper<Throwable, AppError> errorToDomainMapper;
 
     public CharactersRepositoryImpl(CharactersRemoteDataSource remoteDataSource,
                                     CharactersLocalDataSource localDataSource,
                                     CharacterResponseMapper responseMapper,
-                                    CharacterEntityMapper characterEntityMapper) {
+                                    CharacterEntityMapper characterEntityMapper,
+                                    Mapper<Throwable, AppError> errorToDomainMapper) {
         this.remoteDataSource = remoteDataSource;
         this.localDataSource = localDataSource;
         this.responseMapper = responseMapper;
         this.characterEntityMapper = characterEntityMapper;
+        this.errorToDomainMapper = errorToDomainMapper;
     }
 
     @Override
@@ -36,7 +41,11 @@ public class CharactersRepositoryImpl implements CharactersRepository {
                     if (characterEntities.isEmpty())
                         return remoteDataSource.fetchCharacters(params)
                                 .map(responseMapper::mapFromResponse)
-                                .doOnSuccess(this::saveCharacters);
+                                .doOnSuccess(this::saveCharacters)
+                                .onErrorResumeNext(throwable -> {
+                                    AppError appError = errorToDomainMapper.map(throwable);
+                                    return Single.error(appError);
+                                });
                     else return Single.just(characterEntities)
                             .map(characterEntityMapper::mapFromEntity);
                 });

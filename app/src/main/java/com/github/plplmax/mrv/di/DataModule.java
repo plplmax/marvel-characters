@@ -98,11 +98,13 @@ public class DataModule {
     CharactersRepository provideCharactersRepository(CharactersRemoteDataSource remoteDataSource,
                                                      CharactersLocalDataSource localDataSource,
                                                      CharacterResponseMapper wrapperResponseMapper,
-                                                     CharacterEntityMapper characterEntityMapper) {
+                                                     CharacterEntityMapper characterEntityMapper,
+                                                     Mapper<Throwable, AppError> errorMapper) {
         return new CharactersRepositoryImpl(remoteDataSource,
                 localDataSource,
                 wrapperResponseMapper,
-                characterEntityMapper);
+                characterEntityMapper,
+                errorMapper);
     }
 
     @Provides
