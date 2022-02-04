@@ -29,8 +29,10 @@ public class AppModule {
 
     @Provides
     @Singleton
-    CharactersViewModelFactory provideCharactersViewModelFactory(FetchCharactersInteractor interactor) {
-        return new CharactersViewModelFactory(interactor);
+    CharactersViewModelFactory provideCharactersViewModelFactory(
+            FetchCharactersInteractor interactor,
+            Mapper<ErrorType, String> errorMapper) {
+        return new CharactersViewModelFactory(interactor, errorMapper);
     }
 
     @Provides

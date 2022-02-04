@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.github.plplmax.mrv.domain.core.AppError;
+import com.github.plplmax.mrv.domain.core.ErrorType;
+import com.github.plplmax.mrv.domain.core.Mapper;
 import com.github.plplmax.mrv.domain.interactors.FetchCharactersInteractor;
 import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.models.FetchCharactersParams;
@@ -21,6 +24,7 @@ public class CharactersViewModel extends ViewModel {
 
 
     private final FetchCharactersInteractor interactor;
+    private final Mapper<ErrorType, String> errorMapper;
 
     private Disposable disposable;
 
@@ -35,8 +39,11 @@ public class CharactersViewModel extends ViewModel {
     public int lastCharactersLoadedCount = 0;
     public String failMessage;
 
-    public CharactersViewModel(FetchCharactersInteractor interactor) {
+    public CharactersViewModel(
+            FetchCharactersInteractor interactor,
+            Mapper<ErrorType, String> errorMapper) {
         this.interactor = interactor;
+        this.errorMapper = errorMapper;
     }
 
     public void fetchCharacters(FetchCharactersParams params) {
@@ -52,7 +59,8 @@ public class CharactersViewModel extends ViewModel {
                             _state.postValue(State.DONE);
                         },
                         error -> {
-                            failMessage = error.getMessage();
+                            ErrorType errorType = ((AppError) error).type();
+                            failMessage = errorMapper.map(errorType);
                             _state.postValue(State.ERROR);
                         });
     }
