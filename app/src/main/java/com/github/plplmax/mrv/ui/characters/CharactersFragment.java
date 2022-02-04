@@ -28,10 +28,9 @@ import com.google.android.material.snackbar.Snackbar;
 import javax.inject.Inject;
 
 public class CharactersFragment extends Fragment {
-    @Inject
-    CharactersViewModelFactory factory;
-
     private static final String PREVIOUS_ITEM_COUNT_KEY = "previous_item_count_key";
+
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     private CharactersViewModel viewModel;
 
@@ -44,7 +43,8 @@ public class CharactersFragment extends Fragment {
 
     private OnCharacterClickListener characterClickListener;
 
-    private final Handler handler = new Handler(Looper.getMainLooper());
+    @Inject
+    CharactersViewModelFactory factory;
 
     public interface OnCharacterClickListener {
         void onCharacterClick(Character character);
