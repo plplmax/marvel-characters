@@ -42,7 +42,7 @@ public class DataModule {
     private static final String TIMESTAMP_KEY = "ts";
     private static final String HASH_KEY = "hash";
     private static final String DATABASE_NAME = "database";
-    private static final byte TIMEOUT_IN_SECONDS = 120;
+    private static final byte TIMEOUT_IN_SECONDS = 30;
 
     @Provides
     @Singleton
