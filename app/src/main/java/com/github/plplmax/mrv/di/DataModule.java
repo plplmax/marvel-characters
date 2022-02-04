@@ -133,7 +133,7 @@ public class DataModule {
 
     @Provides
     @Singleton
-    CharacterEntityMapper provideCharacterDataMapper() {
+    CharacterEntityMapper provideCharacterEntityMapper() {
         return new CharacterEntityMapper();
     }
 
