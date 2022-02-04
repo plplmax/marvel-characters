@@ -127,7 +127,7 @@ public class DataModule {
 
     @Provides
     @Singleton
-    CharacterResponseMapper provideCharacterDataWrapperResponseMapper() {
+    CharacterResponseMapper provideCharacterResponseMapper() {
         return new CharacterResponseMapper();
     }
 
