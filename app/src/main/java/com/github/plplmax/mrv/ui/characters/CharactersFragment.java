@@ -156,15 +156,17 @@ public class CharactersFragment extends Fragment {
                 super.onScrolled(recyclerView, dx, dy);
                 if (viewModel.isOnScrolledActive() && needPreloadCharacters()) {
                     viewModel.deactivateOnScrolled();
-                    handler.post(() -> {
-                        FetchCharactersParams params = new FetchCharactersParams(
-                                adapter.getItemCount(),
-                                CharactersViewModel.DEFAULT_CHARACTERS_LIMIT);
-                        viewModel.fetchCharacters(params);
-                    });
+                    handler.post(CharactersFragment.this::fetchCharacters);
                 }
             }
         });
+    }
+
+    private void fetchCharacters() {
+        FetchCharactersParams params = new FetchCharactersParams(
+                adapter.getItemCount(),
+                CharactersViewModel.DEFAULT_CHARACTERS_LIMIT);
+        viewModel.fetchCharacters(params);
     }
 
     private boolean needPreloadCharacters() {
@@ -192,7 +194,7 @@ public class CharactersFragment extends Fragment {
 
     private void showMessage(String message) {
         Snackbar.make(requireContext(), progressBar, message, BaseTransientBottomBar.LENGTH_INDEFINITE)
-                .setAction("Retry", v -> viewModel.activateOnScrolled())
+                .setAction("Retry", v -> fetchCharacters())
                 .show();
     }
 }
