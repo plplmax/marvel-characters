@@ -192,7 +192,7 @@ public class CharactersFragment extends Fragment {
 
     private void showMessage(String message) {
         snackbar = Snackbar.make(progressBar, message, BaseTransientBottomBar.LENGTH_INDEFINITE)
-                .setAction("Retry", v -> fetchCharacters());
+                .setAction(R.string.retry, v -> fetchCharacters());
         snackbar.show();
     }
 }

@@ -4,4 +4,5 @@
     <string name="no_internet_connection">Internet connection does not exist</string>
     <string name="service_unavailable">Marvel\'s service is unavailable</string>
     <string name="something_went_wrong">Something went wrong</string>
+    <string name="retry">Retry</string>
 </resources>
