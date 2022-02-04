@@ -1,10 +1,11 @@
 package com.github.plplmax.mrv.data.repository;
 
+import com.github.plplmax.mrv.data.core.EntityMapper;
+import com.github.plplmax.mrv.data.core.ResponseMapper;
 import com.github.plplmax.mrv.data.local.CharacterEntity;
-import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
 import com.github.plplmax.mrv.data.local.CharactersLocalDataSource;
-import com.github.plplmax.mrv.data.remote.CharacterResponseMapper;
 import com.github.plplmax.mrv.data.remote.CharactersRemoteDataSource;
+import com.github.plplmax.mrv.data.remote.responses.CharacterDataWrapperResponse;
 import com.github.plplmax.mrv.domain.core.AppError;
 import com.github.plplmax.mrv.domain.core.Mapper;
 import com.github.plplmax.mrv.domain.models.Character;
@@ -18,15 +19,16 @@ import io.reactivex.rxjava3.core.Single;
 public class CharactersRepositoryImpl implements CharactersRepository {
     private final CharactersRemoteDataSource remoteDataSource;
     private final CharactersLocalDataSource localDataSource;
-    private final CharacterResponseMapper responseMapper;
-    private final CharacterEntityMapper characterEntityMapper;
+    private final ResponseMapper<CharacterDataWrapperResponse, List<Character>> responseMapper;
+    private final EntityMapper<List<CharacterEntity>, List<Character>> characterEntityMapper;
     private final Mapper<Throwable, AppError> errorToDomainMapper;
 
-    public CharactersRepositoryImpl(CharactersRemoteDataSource remoteDataSource,
-                                    CharactersLocalDataSource localDataSource,
-                                    CharacterResponseMapper responseMapper,
-                                    CharacterEntityMapper characterEntityMapper,
-                                    Mapper<Throwable, AppError> errorToDomainMapper) {
+    public CharactersRepositoryImpl(
+            CharactersRemoteDataSource remoteDataSource,
+            CharactersLocalDataSource localDataSource,
+            ResponseMapper<CharacterDataWrapperResponse, List<Character>> responseMapper,
+            EntityMapper<List<CharacterEntity>, List<Character>> characterEntityMapper,
+            Mapper<Throwable, AppError> errorToDomainMapper) {
         this.remoteDataSource = remoteDataSource;
         this.localDataSource = localDataSource;
         this.responseMapper = responseMapper;

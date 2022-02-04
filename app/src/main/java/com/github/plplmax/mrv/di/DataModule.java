@@ -6,21 +6,27 @@ import androidx.annotation.NonNull;
 import androidx.room.Room;
 
 import com.github.plplmax.mrv.R;
+import com.github.plplmax.mrv.data.core.EntityMapper;
 import com.github.plplmax.mrv.data.core.ErrorToDomainMapper;
+import com.github.plplmax.mrv.data.core.ResponseMapper;
 import com.github.plplmax.mrv.data.local.AppDatabase;
 import com.github.plplmax.mrv.data.local.CharacterDao;
+import com.github.plplmax.mrv.data.local.CharacterEntity;
 import com.github.plplmax.mrv.data.local.CharacterEntityMapper;
 import com.github.plplmax.mrv.data.local.CharactersLocalDataSource;
 import com.github.plplmax.mrv.data.remote.CharacterResponseMapper;
 import com.github.plplmax.mrv.data.remote.CharactersRemoteDataSource;
 import com.github.plplmax.mrv.data.remote.CharactersService;
+import com.github.plplmax.mrv.data.remote.responses.CharacterDataWrapperResponse;
 import com.github.plplmax.mrv.data.repository.CharactersRepositoryImpl;
 import com.github.plplmax.mrv.domain.core.AppError;
 import com.github.plplmax.mrv.domain.core.Mapper;
 import com.github.plplmax.mrv.domain.core.Md5Provider;
+import com.github.plplmax.mrv.domain.models.Character;
 import com.github.plplmax.mrv.domain.repository.CharactersRepository;
 import com.github.plplmax.mrv.ui.core.ResourceProvider;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -94,16 +100,18 @@ public class DataModule {
 
     @Provides
     @Singleton
-    CharactersRepository provideCharactersRepository(CharactersRemoteDataSource remoteDataSource,
-                                                     CharactersLocalDataSource localDataSource,
-                                                     CharacterResponseMapper wrapperResponseMapper,
-                                                     CharacterEntityMapper characterEntityMapper,
-                                                     Mapper<Throwable, AppError> errorMapper) {
-        return new CharactersRepositoryImpl(remoteDataSource,
+    CharactersRepository provideCharactersRepository(
+            CharactersRemoteDataSource remoteDataSource,
+            CharactersLocalDataSource localDataSource,
+            ResponseMapper<CharacterDataWrapperResponse, List<Character>> responseMapper,
+            EntityMapper<List<CharacterEntity>, List<Character>> characterEntityMapper,
+            Mapper<Throwable, AppError> errorToDomainMapper) {
+        return new CharactersRepositoryImpl(
+                remoteDataSource,
                 localDataSource,
-                wrapperResponseMapper,
+                responseMapper,
                 characterEntityMapper,
-                errorMapper);
+                errorToDomainMapper);
     }
 
     @Provides
@@ -127,13 +135,13 @@ public class DataModule {
 
     @Provides
     @Singleton
-    CharacterResponseMapper provideCharacterResponseMapper() {
+    ResponseMapper<CharacterDataWrapperResponse, List<Character>> provideCharacterResponseMapper() {
         return new CharacterResponseMapper();
     }
 
     @Provides
     @Singleton
-    CharacterEntityMapper provideCharacterEntityMapper() {
+    EntityMapper<List<CharacterEntity>, List<Character>> provideCharacterEntityMapper() {
         return new CharacterEntityMapper();
     }
 
