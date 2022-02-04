@@ -37,6 +37,7 @@ public class CharactersFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
+    private Snackbar snackbar;
 
     private CharactersAdapter adapter;
     private GridLayoutManager gridLayoutManager;
@@ -96,6 +97,7 @@ public class CharactersFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        if (snackbar != null) snackbar.dismiss();
         recyclerView = null;
         progressBar = null;
         adapter = null;
@@ -189,8 +191,8 @@ public class CharactersFragment extends Fragment {
     }
 
     private void showMessage(String message) {
-        Snackbar.make(progressBar, message, BaseTransientBottomBar.LENGTH_INDEFINITE)
-                .setAction("Retry", v -> fetchCharacters())
-                .show();
+        snackbar = Snackbar.make(progressBar, message, BaseTransientBottomBar.LENGTH_INDEFINITE)
+                .setAction("Retry", v -> fetchCharacters());
+        snackbar.show();
     }
 }
