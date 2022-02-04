@@ -2,8 +2,11 @@ package com.github.plplmax.mrv.di;
 
 import android.content.Context;
 
+import com.github.plplmax.mrv.domain.core.ErrorType;
+import com.github.plplmax.mrv.domain.core.Mapper;
 import com.github.plplmax.mrv.domain.interactors.FetchCharactersInteractor;
 import com.github.plplmax.mrv.ui.characters.CharactersViewModelFactory;
+import com.github.plplmax.mrv.ui.core.ErrorToUiMapper;
 import com.github.plplmax.mrv.ui.core.ResourceProvider;
 
 import javax.inject.Singleton;
@@ -34,5 +37,11 @@ public class AppModule {
     @Singleton
     ResourceProvider provideResourceProvider(Context context) {
         return new ResourceProvider.Base(context);
+    }
+
+    @Provides
+    @Singleton
+    Mapper<ErrorType, String> provideErrorToUiMapper(ResourceProvider provider) {
+        return new ErrorToUiMapper(provider);
     }
 }
