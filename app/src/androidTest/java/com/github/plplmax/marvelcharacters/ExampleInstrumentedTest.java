@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.github.plplmax.mrv", appContext.getPackageName());
+        assertEquals("com.github.plplmax.marvelcharacters", appContext.getPackageName());
     }
 }
