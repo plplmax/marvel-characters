@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MRV</string>
+    <string name="app_name">Marvel Characters</string>
     <string name="default_description_character_image">The hero of Marvel</string>
     <string name="no_internet_connection">Internet connection does not exist</string>
     <string name="service_unavailable">Marvel\'s service is unavailable</string>
