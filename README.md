@@ -49,8 +49,5 @@ or to build and immediately install it on a running emulator or connected device
 
 https://user-images.githubusercontent.com/50287455/158012490-09eb5642-a36c-42a1-b30b-db71fcc8ec49.mp4
 
-## Contributing
-If you want to make small changes, please create a pull request. Major changes will be rejected.
-
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
